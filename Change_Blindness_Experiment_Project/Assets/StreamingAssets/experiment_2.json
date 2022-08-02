@@ -1,5 +1,8 @@
 {
-    "n_trials": 10,
-    "display_duration": 2,
-    "flicker_time":  0.5
+    "n_trials": 2,
+    "time_between_trials": 2.0,
+    "fixate_duration": 1.0,
+    "display_duration": 2.0,
+    "hide_duration": 0.5,
+    "response_duration": 4
 }

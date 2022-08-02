@@ -6,9 +6,18 @@
             "id": "d7bf907c-d3ed-45c9-8c12-daaae0cbaca0",
             "actions": [
                 {
-                    "name": "Respond",
+                    "name": "RespondLeft",
                     "type": "Button",
                     "id": "a337b872-6b73-450a-bf51-31fb4020a5b4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RespondRight",
+                    "type": "Button",
+                    "id": "2137e197-58ab-4d01-a478-8813467b779d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -19,11 +28,22 @@
                 {
                     "name": "",
                     "id": "55507efd-a301-4889-b158-4ed0461f6b5f",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Respond",
+                    "action": "RespondLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be40e1be-691c-4160-bad7-d317841aca66",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "RespondRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
