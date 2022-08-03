@@ -23,14 +23,15 @@ public class SessionBuilder : MonoBehaviour
         foreach (Trial trial in mainBlock.trials)
         {
             MainStimuliList.Shuffle();
-            trial.settings["target"] = MainStimuliList[0];
+            trial.settings.SetValue("target", MainStimuliList[0]);
 
             TargetSpawnPoints.Shuffle();
             Transform SelectedSpawnPoint = TargetSpawnPoints[0];
-            trial.settings["targetLocation"] = SelectedSpawnPoint.position;
-            trial.settings["targetSide"] = SelectedSpawnPoint.tag;
-
+            trial.settings.SetValue("targetLocation", SelectedSpawnPoint.position);
+            trial.settings.SetValue("targetSide", SelectedSpawnPoint.tag);
             trial.settings.SetValue("trial_type", "onset");
+
+            
         }
     }
 }

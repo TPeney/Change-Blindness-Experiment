@@ -6,20 +6,23 @@ using UXF;
 
 public class TrialRunner : MonoBehaviour
 {
+    // Visual elements set from inspector
     [Header("Non-stimuli Trial GameObjects")]
     [SerializeField] GameObject fixationCross;
     [SerializeField] GameObject responsePrompt;
     [SerializeField] GameObject blanker;
 
+    // Variables relating to trial results
     GameObject targetObject;
     float RT;
     string sideResponse;
     bool trialPassed;
 
-    // Cached References from Start()
+    // Cached references from Start()
     Transform stimuliHolder;
     List<GameObject> StimuliList;
 
+    // States
     bool AwaitingResponse = false;
 
     private void Start()
@@ -40,45 +43,21 @@ public class TrialRunner : MonoBehaviour
     // Run the logic for a single trial
     private IEnumerator MainTrialLoop()
     {
+        float interTrialTime = Session.instance.settings.GetFloat("time_between_trials");
         float stimuliDisplayDuration = Session.instance.settings.GetFloat("display_duration");
         float hideDuration = Session.instance.settings.GetFloat("hide_duration");
-        float interTrialTime = Session.instance.settings.GetFloat("time_between_trials");
-
         string trialType = Session.instance.CurrentTrial.settings.GetString("trial_type");
 
         yield return new WaitForSecondsRealtime(interTrialTime);
         yield return StartCoroutine(ShowFixation());
 
-        switch (trialType)
-        {
-            case "onset":
-                ShowStimuli(true, incTarget: false);
-                break;
-            default:
-                ShowStimuli(true);
-                break;
-        }
-
+        LoadStimuliForTrialType(trialType);
         yield return new WaitForSecondsRealtime(stimuliDisplayDuration);
         
         HideScene(true);
-
-        switch (trialType)
-        {
-            case "onset":
-                ShowStimuli(true, incTarget: true);
-                break;
-            case "luminance":
-                // Add colour change logic here
-                break;
-            default:
-                break;
-        }
-
+        ApplyTrialTypeManipulation(trialType);
         yield return new WaitForSecondsRealtime(hideDuration);
-
         HideScene(false);
-
 
         yield return new WaitForSecondsRealtime(stimuliDisplayDuration);
 
@@ -90,8 +69,8 @@ public class TrialRunner : MonoBehaviour
     // Load target into scene and assign it target-related properties
     private void LoadTarget()
     {
-        GameObject target = (GameObject)Session.instance.CurrentTrial.settings["target"];
-        Vector3 targetLocation = (Vector3)Session.instance.CurrentTrial.settings["targetLocation"];
+        GameObject target = (GameObject)Session.instance.CurrentTrial.settings.GetObject("target");
+        Vector3 targetLocation = (Vector3)Session.instance.CurrentTrial.settings.GetObject("targetLocation");
 
         targetObject = Instantiate(target, stimuliHolder);
         targetObject.tag = "Target";
@@ -111,6 +90,20 @@ public class TrialRunner : MonoBehaviour
                 GameObject stimuliObject = Instantiate(stimuli, stimuliHolder);
                 stimuliObject.GetComponent<SpriteRenderer>().enabled = false;
             }
+        }
+    }
+
+    // Manipulates the stimuli prior to display based on the trial type
+    private void LoadStimuliForTrialType(string trialType)
+    {
+        switch (trialType)
+        {
+            case "onset":
+                ShowStimuli(true, incTarget: false);
+                break;
+            default:
+                ShowStimuli(true);
+                break;
         }
     }
 
@@ -141,6 +134,22 @@ public class TrialRunner : MonoBehaviour
     private void HideScene(bool toggle)
     {
         blanker.SetActive(toggle);
+    }
+
+    // Manipulates the stimuli based on the trial type
+    private void ApplyTrialTypeManipulation(string trialType)
+    {
+        switch (trialType)
+        {
+            case "onset":
+                ShowStimuli(true, incTarget: true);
+                break;
+            case "luminance":
+                // Add colour change logic here
+                break;
+            default:
+                break;
+        }
     }
 
     // Allows a response to be provided for a given duration
