@@ -14,7 +14,7 @@ public class TrialRunner : MonoBehaviour
 
     // Variables relating to trial results
     GameObject targetObject;
-    float RT;
+    double start, end, RT;
     string sideResponse;
     bool trialPassed;
 
@@ -156,27 +156,22 @@ public class TrialRunner : MonoBehaviour
     private IEnumerator AwaitResponse()
     {
         float maxTimeToRespond = Session.instance.settings.GetFloat("response_duration");
-        float start, end;
 
-        start = Time.time;
         ShowStimuli(false);
         responsePrompt.SetActive(true);
         AwaitingResponse = true;
+        start = Time.realtimeSinceStartupAsDouble;
 
         while (AwaitingResponse)
         {
-            float duration = Time.time - start;
+            double duration = Time.realtimeSinceStartupAsDouble - start;
+            Debug.Log(duration);
             if (duration >= maxTimeToRespond)
             {
-                sideResponse = "None";
-                AwaitingResponse = false;
-                SaveResults();
-                yield return null;
+                HandleResponse(timedOut: true);
             }
             yield return null;
         }
-        end = Time.time;
-        RT = end - start;
     }
 
     // Handles a given response - saves trial data 
@@ -194,8 +189,20 @@ public class TrialRunner : MonoBehaviour
             sideResponse = "Right";
         }
 
-
         AwaitingResponse = false;
+        end = Time.realtimeSinceStartupAsDouble;
+        responsePrompt.SetActive(false);
+
+        SaveResults();
+    }
+
+    public void HandleResponse(bool timedOut)
+    {
+        if (!Session.instance.InTrial || !AwaitingResponse) { return; }
+
+        sideResponse = "";
+        AwaitingResponse = false;
+        end = Time.realtimeSinceStartupAsDouble;
         responsePrompt.SetActive(false);
 
         SaveResults();
@@ -207,11 +214,12 @@ public class TrialRunner : MonoBehaviour
 
         string targetSide = Session.instance.CurrentTrial.settings.GetString("targetSide");
         trialPassed = sideResponse == targetSide ? true : false;
-
-        currentTrial.result["RT"] = RT;
-        currentTrial.result["sideResponse"] = sideResponse;
         currentTrial.result["targetSide"] = targetSide;
+        currentTrial.result["sideResponse"] = sideResponse;
         currentTrial.result["trialPassed"] = trialPassed;
+
+        RT = end - start;
+        currentTrial.result["RT"] = RT;
     }
 
     // Destroys all trial-specific objects and ends the trial
