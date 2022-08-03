@@ -48,6 +48,8 @@ public class TrialRunner : MonoBehaviour
         float hideDuration = Session.instance.settings.GetFloat("hide_duration");
         string trialType = Session.instance.CurrentTrial.settings.GetString("trial_type");
 
+        Debug.Log(trialType);
+
         yield return new WaitForSecondsRealtime(interTrialTime);
         yield return StartCoroutine(ShowFixation());
 
@@ -165,7 +167,6 @@ public class TrialRunner : MonoBehaviour
         while (AwaitingResponse)
         {
             double duration = Time.realtimeSinceStartupAsDouble - start;
-            Debug.Log(duration);
             if (duration >= maxTimeToRespond)
             {
                 HandleResponse(timedOut: true);

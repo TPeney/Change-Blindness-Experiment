@@ -13,25 +13,53 @@ public class SessionBuilder : MonoBehaviour
     [Tooltip("A list of transforms representing the desired potential spawn points for the target")]
     [SerializeField] private List<Transform> TargetSpawnPoints;
 
+    int n_trials;
+
     public void GenerateExperiment(Session session)
     {
-        // Generate Blocks and Trials Here 
-        int n_trials = Session.instance.settings.GetInt("n_trials");
-        Block mainBlock = session.CreateBlock(n_trials);
+        n_trials = Session.instance.settings.GetInt("n_trials");
 
-        // Assign each trial a target based on the given list of stimuli (currently at random)
-        foreach (Trial trial in mainBlock.trials)
+        // Trial count must be even as half will be onset and the other half luminance
+        if (n_trials % 2 != 0)
         {
+            Debug.LogError("Trial count must be an even number.");
+        }
+
+        Block realWorldBlock = session.CreateBlock();
+
+        CreateTrials(realWorldBlock);
+    }
+
+    // Creates and adds one of each trial type to a given block
+    // Each pair of trial types shares a target and the targets spawn location
+    private void CreateTrials(Block condition)
+    {
+        for (int i = 0; i < n_trials / 2; i++)
+        {
+            Trial onsetTrial = condition.CreateTrial();
+            onsetTrial.settings.SetValue("trial_type", "onset");
+
+            Trial luminanceTrial = condition.CreateTrial();
+            luminanceTrial.settings.SetValue("trial_type", "luminance");
+
             MainStimuliList.Shuffle();
-            trial.settings.SetValue("target", MainStimuliList[0]);
+            GameObject target = MainStimuliList[0];
 
             TargetSpawnPoints.Shuffle();
             Transform SelectedSpawnPoint = TargetSpawnPoints[0];
-            trial.settings.SetValue("targetLocation", SelectedSpawnPoint.position);
-            trial.settings.SetValue("targetSide", SelectedSpawnPoint.tag);
-            trial.settings.SetValue("trial_type", "onset");
 
-            
+            AssignTrialData(onsetTrial, target, SelectedSpawnPoint);
+            AssignTrialData(luminanceTrial, target, SelectedSpawnPoint);
         }
+
+        condition.trials.Shuffle();
+    }
+
+    // Helper method to assign the data defined in CreateTrials to each pair of trial types
+    private void AssignTrialData(Trial trial, GameObject target, Transform selectedSpawnPoint)
+    {
+        trial.settings.SetValue("target", target);
+        trial.settings.SetValue("targetLocation", selectedSpawnPoint.position);
+        trial.settings.SetValue("targetSide", selectedSpawnPoint.tag);
     }
 }
