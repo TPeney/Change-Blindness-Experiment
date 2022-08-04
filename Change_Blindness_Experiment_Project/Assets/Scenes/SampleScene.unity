@@ -321,7 +321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &463686977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +465,7 @@ RectTransform:
   m_GameObject: {fileID: 463686976}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.001}
-  m_LocalScale: {x: 0.3844078, y: 0.3844078, z: 0.3844078}
+  m_LocalScale: {x: 0.24170408, y: 0.24170408, z: 0.24170408}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2015986823}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 561329160}
   - component: {fileID: 561329159}
   m_Layer: 0
-  m_Name: Background
+  m_Name: WindowBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

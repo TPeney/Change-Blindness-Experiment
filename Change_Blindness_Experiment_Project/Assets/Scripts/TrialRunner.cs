@@ -21,6 +21,7 @@ public class TrialRunner : MonoBehaviour
     // Cached references from Start()
     Transform stimuliHolder;
     List<GameObject> StimuliList;
+    GameObject background;
 
     // States
     bool AwaitingResponse = false;
@@ -29,6 +30,7 @@ public class TrialRunner : MonoBehaviour
     {
         stimuliHolder = GameObject.Find("SpawnedStimuli").transform;
         StimuliList = FindObjectOfType<SessionBuilder>().MainStimuliList;
+        background = GameObject.Find("WindowBackground");
     }
 
     // Invoked via the UXF OnTrialBegin Event - Prepares and then starts the trial
@@ -146,9 +148,14 @@ public class TrialRunner : MonoBehaviour
             case "onset":
                 ShowStimuli(true, incTarget: true);
                 break;
-            case "luminance":
-                // Add colour change logic here
+
+            case "luminance": // Needs adjusting
+                Color backgroundColor = background.GetComponent<MeshRenderer>().material.color;
+                Color originalColor = targetObject.GetComponent<Renderer>().material.color;
+                Color newColor = backgroundColor - originalColor;
+                targetObject.GetComponent<Renderer>().material.color = newColor;
                 break;
+
             default:
                 break;
         }
@@ -209,6 +216,7 @@ public class TrialRunner : MonoBehaviour
         SaveResults();
     }
 
+    // Saves the trial data to the UXF results system
     private void SaveResults()
     {
         Trial currentTrial = Session.instance.CurrentTrial;
