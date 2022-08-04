@@ -36,6 +36,7 @@ public class TrialRunner : MonoBehaviour
     // Invoked via the UXF OnTrialBegin Event - Prepares and then starts the trial
     public void BeginTrial()
     {
+        Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
         if (!Session.instance.InTrial) { return; }
         LoadTarget();
         LoadStimuli();
@@ -220,11 +221,15 @@ public class TrialRunner : MonoBehaviour
     private void SaveResults()
     {
         Trial currentTrial = Session.instance.CurrentTrial;
+        
+        string blockTag = Session.instance.CurrentBlock.settings.GetString("tag");
+        currentTrial.result["Condition"] = blockTag;
 
         string targetSide = Session.instance.CurrentTrial.settings.GetString("targetSide");
-        trialPassed = sideResponse == targetSide ? true : false;
         currentTrial.result["targetSide"] = targetSide;
         currentTrial.result["sideResponse"] = sideResponse;
+
+        trialPassed = sideResponse == targetSide ? true : false;
         currentTrial.result["trialPassed"] = trialPassed;
 
         RT = end - start;
