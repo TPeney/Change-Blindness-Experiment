@@ -11,6 +11,7 @@ public class SessionController : MonoBehaviour
     public Block currentBlock;
     public PlayerInput controls;
     private TrialRunner loadedTrialRunner;
+    public InfoScreen loadedInfoScreen;
 
     private int numberOfConditions;
     private int nextBlockIndex = 1;
@@ -60,6 +61,13 @@ public class SessionController : MonoBehaviour
         loadedTrialRunner = FindObjectOfType<TrialRunner>();
         controls = FindObjectOfType<PlayerInput>();
 
+        // If there is a StartScreen - show it
+        loadedInfoScreen = GameObject.Find("StartScreen").GetComponent<InfoScreen>();
+        if (loadedInfoScreen != null)
+        {
+            yield return StartCoroutine(ShowInfoScreen());
+        }
+
         StartTrial();
     }
 
@@ -84,9 +92,17 @@ public class SessionController : MonoBehaviour
         }
     }
 
+    // Called when an info screen should be shown
+    // Yields control back to session controller once a response has been given
+    private IEnumerator ShowInfoScreen()
+    {
+        yield return StartCoroutine(loadedInfoScreen.AwaitResponse());
+    }
+
     // Passes an input to the scene's trialHandler
     public void PassResponse(InputAction.CallbackContext value)
     {
         loadedTrialRunner.HandleResponse(value);
+        if (loadedInfoScreen != null) { loadedInfoScreen.HandleResponse(value); }
     }
 }

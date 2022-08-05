@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controls: {fileID: 0}
+  loadedInfoScreen: {fileID: 0}
 --- !u!114 &4259881597571147513
 MonoBehaviour:
   m_ObjectHideFlags: 0
