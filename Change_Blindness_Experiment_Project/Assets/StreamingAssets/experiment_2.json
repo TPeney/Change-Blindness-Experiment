@@ -1,4 +1,6 @@
 {
+    "run_practice": true,
+    "n_prac_trials": 2,
     "n_trials": 2,
     "time_between_trials": 2.0,
     "fixate_duration": 1.0,

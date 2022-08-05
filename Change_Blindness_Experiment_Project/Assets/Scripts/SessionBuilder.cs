@@ -46,7 +46,7 @@ public class SessionBuilder : MonoBehaviour
         return allUnique;
     }
 
-    // TODO Add practice trials
+    // Create a block for each condition of the experiment - assign it a name tag
     private void CreateBlocks(int n_trials)
     {
         Block block_RL = Session.instance.CreateBlock(n_trials);
@@ -54,10 +54,19 @@ public class SessionBuilder : MonoBehaviour
         Block block_VRH = Session.instance.CreateBlock(n_trials);
         Block block_VRG = Session.instance.CreateBlock(n_trials);
 
+        // Tag should be equal to corresponding Scene name
         block_RL.settings.SetValue("tag", "RL");
         block_VRL.settings.SetValue("tag", "VRL");
         block_VRH.settings.SetValue("tag", "VRH");
         block_VRG.settings.SetValue("tag", "VRG");
+
+        bool includePracticeBlock = Session.instance.settings.GetBool("run_practice");
+        if (includePracticeBlock)
+        {
+            int n_practice_trials = Session.instance.settings.GetInt("n_prac_trials");
+            Block Practice = Session.instance.CreateBlock(n_practice_trials);
+            Practice.settings.SetValue("tag", "Practice");
+        }
     }
 
     // Re-orders the blocks in Session based upon the order given in the startup UI
@@ -84,6 +93,12 @@ public class SessionBuilder : MonoBehaviour
             else if (blockType == condition4)
             {
                 Session.instance.blocks[3] = block;
+            }
+            else if (blockType == "Practice")
+            {
+                // Practice is added to the block list last, and as such this should only run once all the other 
+                // blocks have been sorted - placing it first and moving the other along by 1
+                Session.instance.blocks.Insert(0, block);
             }
         }
     }
