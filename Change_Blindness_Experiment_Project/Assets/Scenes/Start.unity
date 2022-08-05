@@ -827,6 +827,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6634002857279178420, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_Name
+      value: ConditionDropDownElement
+      objectReference: {fileID: 0}
     - target: {fileID: 6634002857821976879, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
