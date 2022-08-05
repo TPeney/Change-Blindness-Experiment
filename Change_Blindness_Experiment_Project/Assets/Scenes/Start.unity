@@ -433,6 +433,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1062362043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+  m_PrefabInstance: {fileID: 4008966071315323595}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4008966071315323595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -507,7 +518,7 @@ PrefabInstance:
     - target: {fileID: 1528475394765351021, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: controls
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1062362043}
     - target: {fileID: 1826189667098021181, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -642,10 +653,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4962711867851502118, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: endOnQuit
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4962711867851502118, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: endOnDestroy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962711867851502118, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: endAfterLastTrial
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4962711867851502118, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
@@ -674,7 +689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4962711867851502118, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: onSessionBegin.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadCondition
+      value: LoadNextCondition
       objectReference: {fileID: 0}
     - target: {fileID: 4962711867851502118, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: onSessionBegin.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
