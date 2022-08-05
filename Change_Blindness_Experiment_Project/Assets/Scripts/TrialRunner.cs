@@ -22,6 +22,7 @@ public class TrialRunner : MonoBehaviour
     Transform stimuliHolder;
     List<GameObject> StimuliList;
     GameObject background;
+    PlayerInput controls;
 
     // States
     bool AwaitingResponse = false;
@@ -29,15 +30,19 @@ public class TrialRunner : MonoBehaviour
     private void Start()
     {
         stimuliHolder = GameObject.Find("SpawnedStimuli").transform;
-        StimuliList = FindObjectOfType<SessionBuilder>().MainStimuliList;
+        StimuliList = GetComponent<TrialGenerator>().MainStimuliList;
         background = GameObject.Find("WindowBackground");
+        controls = SessionController.instance.controls;
     }
 
     // Invoked via the UXF OnTrialBegin Event - Prepares and then starts the trial
     public void BeginTrial()
     {
+        Session.instance.NextTrial.Begin();                 
+        if (!Session.instance.InTrial) { Debug.Log("Not in trial"); }
         Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
-        if (!Session.instance.InTrial) { return; }
+        Debug.Log(Session.instance.currentTrialNum);
+
         LoadTarget();
         LoadStimuli();
         StartCoroutine(MainTrialLoop());
@@ -54,8 +59,8 @@ public class TrialRunner : MonoBehaviour
         Debug.Log(trialType);
 
         yield return new WaitForSecondsRealtime(interTrialTime);
-        yield return StartCoroutine(ShowFixation());
 
+        yield return StartCoroutine(ShowFixation());
         LoadStimuliForTrialType(trialType);
         yield return new WaitForSecondsRealtime(stimuliDisplayDuration);
         
@@ -188,7 +193,6 @@ public class TrialRunner : MonoBehaviour
     {
         if (!Session.instance.InTrial || !value.started || !AwaitingResponse) { return; }
         
-        PlayerInput controls = GetComponent<PlayerInput>();
         if (value.action == controls.actions.FindAction("RespondLeft"))
         {
             sideResponse = "Left";
@@ -244,6 +248,7 @@ public class TrialRunner : MonoBehaviour
             Destroy(stimuli.gameObject);
         }
         StopAllCoroutines();
-        Session.instance.EndCurrentTrial();
+        Session.instance.CurrentTrial.End();
+        SessionController.instance.EndOfTrialCheck();
     }
 }
