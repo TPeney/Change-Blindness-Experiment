@@ -13,7 +13,7 @@ public class StimuliSpawn : MonoBehaviour
     {
         stimuliSpawnArea = GameObject.Find("StimuliSpawnArea").transform;
         origin = stimuliSpawnArea.position;
-        range = stimuliSpawnArea.localScale / 2.0f; // Div 2 to give + and - from center point
+        range = stimuliSpawnArea.lossyScale / 2f; // Div 2 to give + and - from center point
     }
 
     private void Update()
@@ -46,7 +46,7 @@ public class StimuliSpawn : MonoBehaviour
     private void AttemptToPlace()
     {
         Vector3 coordinates = SelectRandomPosition();
-        Vector2 checkArea = new Vector2(this.transform.localScale.x, this.transform.localScale.y);
+        Vector2 checkArea = new Vector2(this.transform.lossyScale.x, this.transform.lossyScale.y);
         Collider2D hit = Physics2D.OverlapBox(coordinates, checkArea, 0);
         if (!hit)
         {

@@ -9,6 +9,6 @@ public class ShowGizmo : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = GizmoColor;
-        Gizmos.DrawCube(transform.position, transform.localScale);
+        Gizmos.DrawCube(transform.position, transform.lossyScale);
     }
 }
