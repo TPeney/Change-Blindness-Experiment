@@ -6,9 +6,14 @@ using TMPro;
 
 public class InfoScreen : MonoBehaviour
 {
-    PlayerInput controls = SessionController.instance.controls;
+    PlayerInput controls;
 
     bool responseReceived = false;
+
+    private void Awake()
+    {
+        controls = SessionController.instance.controls;
+    }
 
     public IEnumerator AwaitResponse()
     {
