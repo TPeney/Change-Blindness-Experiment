@@ -40,8 +40,8 @@ public class TrialRunner : MonoBehaviour
     {
         Session.instance.NextTrial.Begin();                 
         if (!Session.instance.InTrial) { Debug.Log("Not in trial"); }
-        Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
-        Debug.Log(Session.instance.currentTrialNum);
+        //Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
+        //Debug.Log(Session.instance.currentTrialNum);
 
         LoadTarget();
         LoadStimuli();
@@ -86,8 +86,8 @@ public class TrialRunner : MonoBehaviour
         targetObject.tag = "Target";
         targetObject.transform.position = targetLocation;
         targetObject.gameObject.name = "Target";
-        targetObject.GetComponent<SpriteRenderer>().sortingOrder = 10;
-        targetObject.GetComponent<SpriteRenderer>().enabled = false;
+        targetObject.GetComponent<Renderer>().sortingOrder = 10;
+        targetObject.GetComponent<Renderer>().enabled = false;
     }
 
     // Create the remaining stimuli from the stimuli list
@@ -98,7 +98,7 @@ public class TrialRunner : MonoBehaviour
             if (stimuli != targetObject)
             {
                 GameObject stimuliObject = Instantiate(stimuli, stimuliHolder);
-                stimuliObject.GetComponent<SpriteRenderer>().enabled = false;
+                stimuliObject.GetComponent<Renderer>().enabled = false;
             }
         }
     }
@@ -135,7 +135,7 @@ public class TrialRunner : MonoBehaviour
             if (!incTarget && stimuli.tag == "Target") { continue; }
             else
             {
-                stimuli.GetComponent<SpriteRenderer>().enabled = toggle;
+                stimuli.GetComponent<Renderer>().enabled = toggle;
             }
         }
     }
@@ -201,6 +201,10 @@ public class TrialRunner : MonoBehaviour
         {
             sideResponse = "Right";
         }
+        else
+        {
+            return;
+        }
 
         AwaitingResponse = false;
         end = Time.realtimeSinceStartupAsDouble;
@@ -249,6 +253,7 @@ public class TrialRunner : MonoBehaviour
         }
         StopAllCoroutines();
         Session.instance.CurrentTrial.End();
+        // TODO Show end screen if last trial - wait for response before contuining
         SessionController.instance.EndOfTrialCheck();
     }
 }
