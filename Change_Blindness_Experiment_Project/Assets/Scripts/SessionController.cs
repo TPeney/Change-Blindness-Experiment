@@ -62,9 +62,10 @@ public class SessionController : MonoBehaviour
         controls = FindObjectOfType<PlayerInput>();
 
         // If there is a StartScreen - show it
-        loadedInfoScreen = GameObject.Find("StartScreen").GetComponent<InfoScreen>();
-        if (loadedInfoScreen != null)
+        GameObject loadedInfoScreenObject = GameObject.Find("StartScreen");
+        if (loadedInfoScreenObject != null)
         {
+            loadedInfoScreen = loadedInfoScreenObject.GetComponent<InfoScreen>();
             yield return StartCoroutine(ShowInfoScreen());
         }
 
