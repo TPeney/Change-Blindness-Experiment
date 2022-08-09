@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UXF;
+using UnityEngine.XR.Management;
 
 public class SessionController : MonoBehaviour
 {
@@ -19,17 +20,20 @@ public class SessionController : MonoBehaviour
     // Create Singleton pattern
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
         else { Destroy(gameObject); }
+        XRGeneralSettings.Instance.Manager.StopSubsystems();
     }
 
     // Get the next block by index and load related scene using its tag
     public void LoadNextCondition()
     {
+        XRGeneralSettings.Instance.Manager.StartSubsystems();
+
         if (nextBlockIndex > Session.instance.blocks.Count)
         {
             // load end scene
@@ -40,6 +44,15 @@ public class SessionController : MonoBehaviour
             currentBlock = Session.instance.GetBlock(nextBlockIndex);
             nextBlockIndex++;
             string ConditionTag = currentBlock.settings.GetString("tag");
+            //if (ConditionTag != "RL")
+            //{
+            //    XRGeneralSettings.Instance.Manager.StartSubsystems();
+            //}
+            //else
+            //{
+            //    XRGeneralSettings.Instance.Manager.StopSubsystems();
+            //}
+
             StartCoroutine(LoadScene(ConditionTag));
         }
     }

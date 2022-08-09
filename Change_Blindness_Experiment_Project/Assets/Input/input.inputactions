@@ -47,11 +47,33 @@
                 },
                 {
                     "name": "",
-                    "id": "be40e1be-691c-4160-bad7-d317841aca66",
+                    "id": "0c67ff78-cf20-423a-bbff-260467e1965a",
+                    "path": "<ValveIndexController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "RespondLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "371fe56d-763e-4e16-b47f-ee3a6de1529b",
                     "path": "<Keyboard>/m",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "RespondRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be40e1be-691c-4160-bad7-d317841aca66",
+                    "path": "<XRInputV1::Valve::IndexControllerOpenXR>{RightHand}/primarybutton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
                     "action": "RespondRight",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -63,6 +85,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ef7e8a9-de47-4476-8954-735284c80d81",
+                    "path": "*/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
                     "action": "Continue",
                     "isComposite": false,
                     "isPartOfComposite": false
