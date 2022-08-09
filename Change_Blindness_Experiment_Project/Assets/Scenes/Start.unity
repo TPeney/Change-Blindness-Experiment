@@ -724,6 +724,20 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3719702864839937707, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_Text
+      value: "The instructions for this experiment are as follows:\n\nYou will be
+        presented with a pattern of shapes for a short duration. \n\nThese will then
+        be hidden briefly, and then shown to you again. However, there will be a
+        slight difference between the new and old patterns.\n\nFor example, there
+        could be a new shape or an existing shape could have changed colour.\n\nYour
+        task is to respond which side of the display you think the change occured
+        on. There will always be one single change per pair.\n\nIf you think the
+        change was on the left, press {left_response}.\n\nIf you think the change
+        was on the left, press {right_response}.\n\nYou should try to respond as
+        quickly, but also as accurately as you can. If you are completely unsure,
+        please guess a side. "
+      objectReference: {fileID: 0}
     - target: {fileID: 3894968614831207842, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
