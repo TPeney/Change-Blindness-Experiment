@@ -15,9 +15,11 @@ public class TestSettup : MonoBehaviour
         Session.instance.settings.SetValue("fixate_duration", 0.5f);
         Session.instance.settings.SetValue("hide_duration", 1);
         Session.instance.settings.SetValue("response_duration", 1);
+        Session.instance.settings.SetValue("targetSide", "left");
+
 
         Session.instance.settings.SetValue("trial_type", "onset");
-        Session.instance.settings.SetValue("tag", "VRG");
+        Session.instance.settings.SetValue("tag", "RL");
 
 
         Block testBlock = Session.instance.CreateBlock(5);

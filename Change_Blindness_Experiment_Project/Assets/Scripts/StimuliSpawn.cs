@@ -10,7 +10,7 @@ public class StimuliSpawn : MonoBehaviour
     string blockType;
 
     int attempts = 0;
-    int maxAttempts = 10;
+    int maxAttempts = 100;
 
     bool placed = false;
 
@@ -33,9 +33,18 @@ public class StimuliSpawn : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.tag == "SpawnAreaBordder") {  AttemptToPlace(); }
+        if (other.name == "ghost")
+        {
+            other.tag = "hit";
+        }
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.tag == "SpawnAreaBorder") {  AttemptToPlace(); }
+
     }
 
     private Vector3 SelectRandomPosition()
@@ -46,7 +55,7 @@ public class StimuliSpawn : MonoBehaviour
         {
             randomRange = new Vector3(Random.Range(-range.x, range.x),
                                       Random.Range(-range.y, range.y),
-                                      0);
+                                      Random.Range(-0.00001f, -0.008f));
         } 
         else
         {
@@ -63,27 +72,54 @@ public class StimuliSpawn : MonoBehaviour
     private void AttemptToPlace()
     {
         Vector3 coordinates = SelectRandomPosition();
-        bool hit;
+        //bool hit;
 
-        if (blockType != "VRG")
-        {
-            Vector2 checkArea = new Vector2(this.transform.lossyScale.x, this.transform.lossyScale.y);
-            Collider2D collision = Physics2D.OverlapBox(coordinates, checkArea, 0);
-            if (!collision) { hit = true; } else { hit = false; }
-        }
-        else
-        {
-            Vector3 checkArea = new Vector3(this.transform.lossyScale.x, this.transform.lossyScale.y, this.transform.lossyScale.x);
-            hit = Physics.CheckBox(coordinates, checkArea);
-            Debug.Log(hit);
-        }
+        GameObject ghost = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        ghost.name = "ghost";
 
-        if (!hit || attempts >= maxAttempts)
+        BoxCollider bx = ghost.AddComponent(typeof(BoxCollider)) as BoxCollider;
+        bx.isTrigger = true;
+        
+        Rigidbody rb = ghost.AddComponent(typeof(Rigidbody)) as Rigidbody;
+        rb.isKinematic = true;
+
+        ghost.transform.localScale = new Vector3(this.transform.lossyScale.x, this.transform.lossyScale.y, 1);
+        ghost.transform.position = coordinates;
+
+        Instantiate(ghost);
+        
+        Debug.Break();
+
+        Debug.Log(ghost.tag);
+        if (ghost.tag != "hit")
         {
             this.transform.position = coordinates;
             placed = true;
         }
 
-        attempts++;
+        Destroy(ghost);
+        //if (blockType != "VRG")
+        //{
+        //    this.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+        //    Vector2 checkArea = new Vector2(this.transform.lossyScale.x, this.transform.lossyScale.y);
+        //    Collider2D collision = Physics2D.OverlapBox(coordinates, checkArea, 0);
+        //    Debug.Log(collision);
+        //    if (collision) { hit = true; } else { hit = false; }
+        //}
+        //else
+        //{
+        //    Vector3 checkArea = new Vector3(this.transform.lossyScale.x, this.transform.lossyScale.y, this.transform.lossyScale.z);
+        //    hit = Physics.CheckBox(coordinates, checkArea);
+        //    Debug.Log(hit);
+        //}
+
+        //if (!hit || attempts >= maxAttempts)
+        //{
+        //    this.transform.position = coordinates;
+        //    placed = true;
+        //}
+
+        //attempts++;
+        //Debug.Log(attempts);
     }
 }

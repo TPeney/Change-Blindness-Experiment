@@ -8,6 +8,7 @@ TagManager:
   - Left
   - Right
   - Target
+  - hit
   layers:
   - Default
   - TransparentFX
