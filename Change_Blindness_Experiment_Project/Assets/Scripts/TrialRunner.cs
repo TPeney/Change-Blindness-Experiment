@@ -11,6 +11,8 @@ public class TrialRunner : MonoBehaviour
     [SerializeField] GameObject fixationCross;
     [SerializeField] GameObject responsePrompt;
     [SerializeField] GameObject blanker;
+    [SerializeField] List<Material> stimuliColours = new();
+    [SerializeField] float targetOverlapTolerance = 1.5f;
 
     // Variables relating to trial results
     GameObject targetObject;
@@ -40,8 +42,6 @@ public class TrialRunner : MonoBehaviour
     {
         Session.instance.NextTrial.Begin();                 
         if (!Session.instance.InTrial) { Debug.Log("Not in trial"); }
-        //Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
-        //Debug.Log(Session.instance.currentTrialNum);
 
         StartCoroutine(MainTrialLoop());
     }
@@ -54,11 +54,12 @@ public class TrialRunner : MonoBehaviour
         float hideDuration = Session.instance.settings.GetFloat("hide_duration");
         string trialType = Session.instance.CurrentTrial.settings.GetString("trial_type");
 
-        Debug.Log(trialType);
+        //Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
+        //Debug.Log(Session.instance.currentTrialNum);
+        //Debug.Log(trialType);
 
         LoadTarget();
         yield return StartCoroutine(LoadStimuli());
-
         yield return new WaitForSecondsRealtime(interTrialTime);
 
         yield return StartCoroutine(ShowFixation());
@@ -108,6 +109,45 @@ public class TrialRunner : MonoBehaviour
                         yield return StartCoroutine(spawnScript.AttemptToPlace());
                     }
                 }
+            }
+        }
+        CheckForColourOverlap();
+    }
+
+    // Checks for stimuli which might overlap with the target, and ensures they are not the same colour
+    private void CheckForColourOverlap()
+    {
+        // Checks the area of the target (Scale / 2 as half-extents) plus a tolerance amount
+        Collider[] colliders = Physics.OverlapBox(targetObject.transform.position,
+                                                  (targetObject.transform.lossyScale / 2) * targetOverlapTolerance);
+
+        foreach (Collider other in colliders)
+        {
+            if (other.CompareTag("Target")) { continue; }
+
+            Color targetColour = targetObject.GetComponent<Renderer>().material.color;
+            Color stimuliOverlapColour = other.GetComponent<Renderer>().material.color;
+
+            if (targetColour == stimuliOverlapColour)
+            {
+                int nudge;
+                do
+                {
+                    nudge = Mathf.RoundToInt(Random.Range(-1f, 1f));
+                }
+                while (nudge == 0);
+
+                int t_index = stimuliColours.FindIndex(a => a.color == targetColour);
+                
+                // Prevent Index Error if target is at 0 or 255 already
+                int change_index = (t_index + nudge) switch
+                {
+                    -1 => 1,
+                    5 => stimuliColours.Count - 1,
+                    _ => t_index + nudge,
+                };
+
+                other.GetComponent<Renderer>().material = stimuliColours[change_index];
             }
         }
     }
