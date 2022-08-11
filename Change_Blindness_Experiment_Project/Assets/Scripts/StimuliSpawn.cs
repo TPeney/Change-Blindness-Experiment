@@ -59,8 +59,6 @@ public class StimuliSpawn : MonoBehaviour
         }
 
         Vector3 randomCoordinates = origin + randomRange;
-
-        Debug.Log(randomCoordinates);
        
         return randomCoordinates;
     }
@@ -73,18 +71,17 @@ public class StimuliSpawn : MonoBehaviour
         GameObject ghost = CreateGhost(coordinates);
         yield return new WaitForFixedUpdate();
 
-        Debug.Log(ghost.tag);
-
         if (!ghost.CompareTag("hit") || attempts >= maxAttempts)
         {
             this.transform.position = coordinates;
             placed = true;
-            Debug.Log(this.transform.position);
         }
 
         Destroy(ghost);
         attempts++;
         attemptingToPlace = false;
+
+        yield return null;
     }
 
     // Creates a temporary GameObject used for checking collision in an area 
