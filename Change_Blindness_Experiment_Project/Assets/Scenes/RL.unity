@@ -481,7 +481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 639660354015709094, guid: 23dfe6101ad606e4583a5f0825cffcc8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12360
+      value: 19080
       objectReference: {fileID: 0}
     - target: {fileID: 1426757067809395261, guid: 23dfe6101ad606e4583a5f0825cffcc8, type: 3}
       propertyPath: m_AnchorMax.y
@@ -513,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1480615219825259101, guid: 23dfe6101ad606e4583a5f0825cffcc8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 6695
+      value: 10335
       objectReference: {fileID: 0}
     - target: {fileID: 3066418781214519751, guid: 23dfe6101ad606e4583a5f0825cffcc8, type: 3}
       propertyPath: m_AnchorMax.y
@@ -768,6 +768,10 @@ PrefabInstance:
       value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8413588686295853471, guid: 91a7fb246f269184299710c8228e5d3a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413588686295853471, guid: 91a7fb246f269184299710c8228e5d3a, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
@@ -842,6 +846,10 @@ PrefabInstance:
     - target: {fileID: 8413588687227049394, guid: 91a7fb246f269184299710c8228e5d3a, type: 3}
       propertyPath: m_Name
       value: ExperimentScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413588687227049407, guid: 91a7fb246f269184299710c8228e5d3a, type: 3}
+      propertyPath: targetOverlapTolerance
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a7fb246f269184299710c8228e5d3a, type: 3}

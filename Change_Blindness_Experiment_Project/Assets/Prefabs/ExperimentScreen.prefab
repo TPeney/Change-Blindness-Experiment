@@ -875,6 +875,13 @@ MonoBehaviour:
   fixationCross: {fileID: 8413588685674716279}
   responsePrompt: {fileID: 8413588686991922972}
   blanker: {fileID: 8413588686024422492}
+  stimuliColours:
+  - {fileID: 2100000, guid: f17076071b5c0c648993da94fd3e4fd7, type: 2}
+  - {fileID: 2100000, guid: ae6530a3be24da1439c66d5ddc280ade, type: 2}
+  - {fileID: 2100000, guid: 2b3fb68511d513346992d037bb81635f, type: 2}
+  - {fileID: 2100000, guid: 36bca11b7814bdc43b3aba22ff0c7d62, type: 2}
+  - {fileID: 2100000, guid: 3e3e6477fb92c4c4091b2982682f11b5, type: 2}
+  targetOverlapTolerance: 1.5
 --- !u!1001 &7817743316694359297
 PrefabInstance:
   m_ObjectHideFlags: 0

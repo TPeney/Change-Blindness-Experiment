@@ -99,8 +99,17 @@ public class TrialRunner : MonoBehaviour
         {
             if (stimuli != targetObject)
             {
+                // Instantiate a stimuli object with a random colour from the list of stimuli materials
+                // & turn off so not seen before trial start
                 GameObject stimuliObject = Instantiate(stimuli, stimuliHolder);
-                stimuliObject.GetComponent<Renderer>().enabled = false;
+                Renderer stimRend = stimuliObject.GetComponent<Renderer>();
+                stimRend.enabled = false;
+                
+                System.Random random = new();
+                Material randomColour = stimuliColours[random.Next(stimuliColours.Count)];
+                stimRend.material = randomColour;
+
+                // Move stimuli to a random, free location within the stimuli spawn area
                 StimuliSpawn spawnScript = stimuliObject.GetComponent<StimuliSpawn>();
                 while (!spawnScript.placed)
                 {
@@ -111,7 +120,7 @@ public class TrialRunner : MonoBehaviour
                 }
             }
         }
-        CheckForColourOverlap();
+        CheckForColourOverlap(); // See below
     }
 
     // Checks for stimuli which might overlap with the target, and ensures they are not the same colour
