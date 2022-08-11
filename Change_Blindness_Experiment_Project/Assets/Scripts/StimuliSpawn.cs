@@ -27,7 +27,6 @@ public class StimuliSpawn : MonoBehaviour
         {
             other.tag = "hit";
         }
-        Debug.Log("I have been entered");
     }
 
     private void OnTriggerStay(Collider other)
@@ -56,11 +55,13 @@ public class StimuliSpawn : MonoBehaviour
         {
             randomRange = new Vector3(Random.Range(-range.x, range.x),
                                       Random.Range(-range.y, range.y),
-                                      Random.Range(-0.00001f, -0.008f));
+                                      Random.Range(-0.00001f, -0.001f));
         }
 
         Vector3 randomCoordinates = origin + randomRange;
 
+        Debug.Log(randomCoordinates);
+       
         return randomCoordinates;
     }
 
@@ -78,35 +79,36 @@ public class StimuliSpawn : MonoBehaviour
         {
             this.transform.position = coordinates;
             placed = true;
+            Debug.Log(this.transform.position);
         }
 
         Destroy(ghost);
         attempts++;
-        Debug.Log(attempts);
         attemptingToPlace = false;
     }
 
+    // Creates a temporary GameObject used for checking collision in an area 
+    // Using a Physics check might be more efficient? 
     private GameObject CreateGhost(Vector3 coordinates)
     {
         GameObject ghost = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Destroy(ghost.GetComponent<MeshRenderer>());
+        // Destroy the initial collider so the new collider will be adapted to the updated scale
         Destroy(ghost.GetComponent<BoxCollider>());
+        Destroy(ghost.GetComponent<MeshRenderer>());
 
         ghost.name = "ghost";
         
+        // Add a colider which is the same dimensions as the current stimuli's collider 
         ghost.transform.localScale = this.transform.lossyScale;
         BoxCollider bx = ghost.AddComponent<BoxCollider>();
         bx.isTrigger = true;
+        bx.size = this.GetComponent<BoxCollider>().size;
 
         Rigidbody rb = ghost.AddComponent(typeof(Rigidbody)) as Rigidbody;
         rb.isKinematic = true;
 
-        Vector3 colliderSize = this.GetComponent<BoxCollider>().bounds.extents;
-        Vector3 stimuliSize = this.transform.lossyScale;
-        Vector3 checkSize = new Vector3(stimuliSize.x * colliderSize.x, stimuliSize.y * colliderSize.y, stimuliSize.z * colliderSize.z);
-
-        bx.size = this.GetComponent<BoxCollider>().size;
         ghost.transform.position = coordinates;
+        
         return ghost;
     }
 }

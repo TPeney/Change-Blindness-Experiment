@@ -85,8 +85,8 @@ public class TrialRunner : MonoBehaviour
 
         targetObject = Instantiate(target, stimuliHolder);
         targetObject.tag = "Target";
-        targetObject.transform.position = targetLocation;
         targetObject.gameObject.name = "Target";
+        targetObject.transform.position = targetLocation;
         targetObject.GetComponent<Renderer>().sortingOrder = 10;
         targetObject.GetComponent<Renderer>().enabled = false;
     }
