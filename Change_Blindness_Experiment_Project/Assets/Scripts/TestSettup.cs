@@ -10,7 +10,7 @@ public class TestSettup : MonoBehaviour
 
     public void SetUpTestScene()
     {
-        Session.instance.settings.SetValue("time_between_trials", 0.5f);
+        Session.instance.settings.SetValue("time_between_trials", 1f);
         Session.instance.settings.SetValue("display_duration", 5);
         Session.instance.settings.SetValue("fixate_duration", 0.5f);
         Session.instance.settings.SetValue("hide_duration", 1);

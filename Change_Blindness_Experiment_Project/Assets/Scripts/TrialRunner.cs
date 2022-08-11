@@ -43,8 +43,6 @@ public class TrialRunner : MonoBehaviour
         //Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
         //Debug.Log(Session.instance.currentTrialNum);
 
-        LoadTarget();
-        LoadStimuli();
         StartCoroutine(MainTrialLoop());
     }
 
@@ -57,6 +55,9 @@ public class TrialRunner : MonoBehaviour
         string trialType = Session.instance.CurrentTrial.settings.GetString("trial_type");
 
         Debug.Log(trialType);
+
+        LoadTarget();
+        yield return StartCoroutine(LoadStimuli());
 
         yield return new WaitForSecondsRealtime(interTrialTime);
 
@@ -91,7 +92,7 @@ public class TrialRunner : MonoBehaviour
     }
 
     // Create the remaining stimuli from the stimuli list
-    private void LoadStimuli()
+    private IEnumerator LoadStimuli()
     {
         foreach (GameObject stimuli in StimuliList)
         {
@@ -99,6 +100,14 @@ public class TrialRunner : MonoBehaviour
             {
                 GameObject stimuliObject = Instantiate(stimuli, stimuliHolder);
                 stimuliObject.GetComponent<Renderer>().enabled = false;
+                StimuliSpawn spawnScript = stimuliObject.GetComponent<StimuliSpawn>();
+                while (!spawnScript.placed)
+                {
+                    if (!spawnScript.attemptingToPlace)
+                    {
+                        yield return StartCoroutine(spawnScript.AttemptToPlace());
+                    }
+                }
             }
         }
     }

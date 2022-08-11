@@ -479,7 +479,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8413588686295853471}
   - component: {fileID: 8413588686295853470}
-  - component: {fileID: 8413588686295853469}
+  - component: {fileID: 3167769515894552043}
+  - component: {fileID: 2027198781091852790}
+  - component: {fileID: 4221699594801497861}
+  - component: {fileID: 6977723536337698107}
   m_Layer: 0
   m_Name: StimuliSpawnArea
   m_TagString: SpawnAreaBorder
@@ -514,32 +517,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88839d9075bc1eb4ebf60a2426e3fa53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GizmoColor: {r: 0, g: 1, b: 0, a: 0.3254902}
---- !u!68 &8413588686295853469
-EdgeCollider2D:
+  GizmoColor: {r: 1, g: 0, b: 0.97766113, a: 0.0627451}
+--- !u!65 &3167769515894552043
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8413588686295853456}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.5, y: 0.5}
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: -0.5}
-  - {x: -0.5, y: -0.5}
-  - {x: -0.5, y: 0.5}
-  m_AdjacentStartPoint: {x: -0.12, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0.99999857, z: 0}
+  m_Center: {x: -0.50001043, y: 0, z: 0.5}
+--- !u!65 &2027198781091852790
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8413588686295853456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0.99999857, z: 1}
+  m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!65 &4221699594801497861
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8413588686295853456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.4999965, z: 0.5}
+--- !u!65 &6977723536337698107
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8413588686295853456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0, z: 1}
+  m_Center: {x: 0, y: -0.4999965, z: 0}
 --- !u!1 &8413588686423420979
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,4 +11,12 @@ public class ShowGizmo : MonoBehaviour
         Gizmos.color = GizmoColor;
         Gizmos.DrawCube(transform.position, transform.lossyScale);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "ghost")
+        {
+            other.tag = "hit";
+        }
+    }
 }

@@ -6,62 +6,57 @@ using UXF;
 public class StimuliSpawn : MonoBehaviour
 {
     Transform stimuliSpawnArea;
-    Vector3 origin, range;
     string blockType;
 
     int attempts = 0;
-    int maxAttempts = 100;
+    int maxAttempts = 20;
 
-    bool placed = false;
+    public bool placed = false;
+    public bool attemptingToPlace = false;
 
-    private void Start()
+    private void Awake()
     {
         stimuliSpawnArea = GameObject.Find("StimuliSpawnArea").transform;
-        origin = stimuliSpawnArea.position;
-        range = stimuliSpawnArea.lossyScale / 2f; // Div 2 to give + and - from center point
         blockType = Session.instance.CurrentBlock.settings.GetString("tag");
     }
 
-    private void Update()
-    {
-        if (this.tag != "Target")
-        {
-            while (!placed)
-            {
-                AttemptToPlace();
-            }
-        }
-    }
-
+    // If an area check ghost is spawned atop an existing placed stimuli, set ghost to acknowledge a hit
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "ghost")
         {
             other.tag = "hit";
         }
+        Debug.Log("I have been entered");
     }
 
-    private void OnTriggerStay(Collider collision)
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.tag == "SpawnAreaBorder") {  AttemptToPlace(); }
-
+        if (other.CompareTag("SpawnAreaBorder")) 
+        {
+            StartCoroutine(AttemptToPlace());
+        }
     }
 
+    // Returns a random Vector3 from within the defined spawn area
     private Vector3 SelectRandomPosition()
     {
+        Vector3 origin = stimuliSpawnArea.position;
+        Vector3 range = stimuliSpawnArea.lossyScale / 2f; // Div 2 to give + and - from center point
+
         Vector3 randomRange;
 
-        if (blockType != "VRG")
-        {
-            randomRange = new Vector3(Random.Range(-range.x, range.x),
-                                      Random.Range(-range.y, range.y),
-                                      Random.Range(-0.00001f, -0.008f));
-        } 
-        else
+        if (blockType == "VRG")
         {
             randomRange = new Vector3(Random.Range(-range.x, range.x),
                                       Random.Range(-range.y, range.y),
                                       Random.Range(-range.z, range.z));
+        } 
+        else // For 2D conditions, Z value is random between two small values to prevent Z-Fighting 
+        {
+            randomRange = new Vector3(Random.Range(-range.x, range.x),
+                                      Random.Range(-range.y, range.y),
+                                      Random.Range(-0.00001f, -0.008f));
         }
 
         Vector3 randomCoordinates = origin + randomRange;
@@ -69,57 +64,49 @@ public class StimuliSpawn : MonoBehaviour
         return randomCoordinates;
     }
 
-    private void AttemptToPlace()
+    // Attempts to place a stimuli in the scene by first using a 'ghost' GameObject to check if the position is empty
+    public IEnumerator AttemptToPlace()
     {
+        attemptingToPlace = true;
         Vector3 coordinates = SelectRandomPosition();
-        //bool hit;
-
-        GameObject ghost = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        ghost.name = "ghost";
-
-        BoxCollider bx = ghost.AddComponent(typeof(BoxCollider)) as BoxCollider;
-        bx.isTrigger = true;
-        
-        Rigidbody rb = ghost.AddComponent(typeof(Rigidbody)) as Rigidbody;
-        rb.isKinematic = true;
-
-        ghost.transform.localScale = new Vector3(this.transform.lossyScale.x, this.transform.lossyScale.y, 1);
-        ghost.transform.position = coordinates;
-
-        Instantiate(ghost);
-        
-        Debug.Break();
+        GameObject ghost = CreateGhost(coordinates);
+        yield return new WaitForFixedUpdate();
 
         Debug.Log(ghost.tag);
-        if (ghost.tag != "hit")
+
+        if (!ghost.CompareTag("hit") || attempts >= maxAttempts)
         {
             this.transform.position = coordinates;
             placed = true;
         }
 
         Destroy(ghost);
-        //if (blockType != "VRG")
-        //{
-        //    this.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
-        //    Vector2 checkArea = new Vector2(this.transform.lossyScale.x, this.transform.lossyScale.y);
-        //    Collider2D collision = Physics2D.OverlapBox(coordinates, checkArea, 0);
-        //    Debug.Log(collision);
-        //    if (collision) { hit = true; } else { hit = false; }
-        //}
-        //else
-        //{
-        //    Vector3 checkArea = new Vector3(this.transform.lossyScale.x, this.transform.lossyScale.y, this.transform.lossyScale.z);
-        //    hit = Physics.CheckBox(coordinates, checkArea);
-        //    Debug.Log(hit);
-        //}
+        attempts++;
+        Debug.Log(attempts);
+        attemptingToPlace = false;
+    }
 
-        //if (!hit || attempts >= maxAttempts)
-        //{
-        //    this.transform.position = coordinates;
-        //    placed = true;
-        //}
+    private GameObject CreateGhost(Vector3 coordinates)
+    {
+        GameObject ghost = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Destroy(ghost.GetComponent<MeshRenderer>());
+        Destroy(ghost.GetComponent<BoxCollider>());
 
-        //attempts++;
-        //Debug.Log(attempts);
+        ghost.name = "ghost";
+        
+        ghost.transform.localScale = this.transform.lossyScale;
+        BoxCollider bx = ghost.AddComponent<BoxCollider>();
+        bx.isTrigger = true;
+
+        Rigidbody rb = ghost.AddComponent(typeof(Rigidbody)) as Rigidbody;
+        rb.isKinematic = true;
+
+        Vector3 colliderSize = this.GetComponent<BoxCollider>().bounds.extents;
+        Vector3 stimuliSize = this.transform.lossyScale;
+        Vector3 checkSize = new Vector3(stimuliSize.x * colliderSize.x, stimuliSize.y * colliderSize.y, stimuliSize.z * colliderSize.z);
+
+        bx.size = this.GetComponent<BoxCollider>().size;
+        ghost.transform.position = coordinates;
+        return ghost;
     }
 }
