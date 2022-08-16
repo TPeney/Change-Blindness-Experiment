@@ -10,8 +10,13 @@ public class TrialGenerator : MonoBehaviour
     [Tooltip("List all stimuli prefabs here")]
     [SerializeField] public List<GameObject> MainStimuliList = new List<GameObject>();
 
+    [Tooltip("A list of the materials (colours) to be used by the stimuli - Lowest RGB at index 0")]
+    [SerializeField] public List<Material> stimuliColours = new();
+
     [Tooltip("A list of transforms representing the desired potential spawn points for the target")]
     [SerializeField] private List<Transform> TargetSpawnPoints;
+    
+    readonly System.Random random = new();
 
     private void Awake()
     {
@@ -25,10 +30,9 @@ public class TrialGenerator : MonoBehaviour
     // Each pair of trial types shares a target and the targets spawn location
     private void CreateTrials(Block condition)
     {
-        int n_trials = Session.instance.settings.GetInt("n_trials");
-
         GameObject target = null;
         Transform selectedSpawnPoint = null;
+        Material selectedMaterial = null;
        
         bool selectNewTarget = true;
 
@@ -41,6 +45,15 @@ public class TrialGenerator : MonoBehaviour
 
                 TargetSpawnPoints.Shuffle();
                 selectedSpawnPoint = TargetSpawnPoints[0];
+
+                selectedMaterial = stimuliColours[random.Next(stimuliColours.Count)];
+
+                // Select colour while colour != 128
+                //do
+                //{
+                //    selectedMaterial = stimuliColours[random.Next(stimuliColours.Count)];
+                //}
+                //while (selectedMaterial)
             }
 
             switch (selectNewTarget)
@@ -59,9 +72,8 @@ public class TrialGenerator : MonoBehaviour
             trial.settings.SetValue("target", target);
             trial.settings.SetValue("targetLocation", selectedSpawnPoint.position);
             trial.settings.SetValue("targetSide", selectedSpawnPoint.tag);
+            trial.settings.SetValue("targetColour", selectedMaterial);
         }
         condition.trials.Shuffle();
     }
-    
-
 }

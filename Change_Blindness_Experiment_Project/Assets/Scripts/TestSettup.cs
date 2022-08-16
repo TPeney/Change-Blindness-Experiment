@@ -10,22 +10,22 @@ public class TestSettup : MonoBehaviour
 
     public void SetUpTestScene()
     {
+        Session.instance.settings.SetValue("tag", "RL");
+
         Session.instance.settings.SetValue("time_between_trials", 1f);
         Session.instance.settings.SetValue("display_duration", 5);
         Session.instance.settings.SetValue("fixate_duration", 0.5f);
         Session.instance.settings.SetValue("hide_duration", 1);
         Session.instance.settings.SetValue("response_duration", 1);
-        Session.instance.settings.SetValue("targetSide", "left");
 
-
-        Session.instance.settings.SetValue("trial_type", "onset");
-        Session.instance.settings.SetValue("tag", "RL");
+        //Session.instance.settings.SetValue("targetSide", "left");
+        //Session.instance.settings.SetValue("trial_type", "onset");
 
 
         Block testBlock = Session.instance.CreateBlock(5);
-        testBlock.settings.SetValue("target", target);
-        Vector3 targetLocation = targetLocationTransform.position;
-        testBlock.settings.SetValue("targetLocation", targetLocation);
-
+        //testBlock.settings.SetValue("target", target);
+        //Vector3 targetLocation = targetLocationTransform.position;
+        //testBlock.settings.SetValue("targetLocation", targetLocation);
+        SessionController.instance.currentBlock = testBlock;
     }
 }

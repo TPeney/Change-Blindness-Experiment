@@ -28,6 +28,9 @@ public class TrialRunner : MonoBehaviour
 
     // States
     bool AwaitingResponse = false;
+    Material targetColour;
+
+    readonly System.Random random = new();
 
     private void Start()
     {
@@ -35,6 +38,7 @@ public class TrialRunner : MonoBehaviour
         StimuliList = GetComponent<TrialGenerator>().MainStimuliList;
         background = GameObject.Find("WindowBackground");
         controls = SessionController.instance.controls;
+        stimuliColours = gameObject.GetComponent<TrialGenerator>().stimuliColours;
     }
 
     // Invoked via the UXF OnTrialBegin Event - Prepares and then starts the trial
@@ -56,7 +60,7 @@ public class TrialRunner : MonoBehaviour
 
         //Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
         //Debug.Log(Session.instance.currentTrialNum);
-        //Debug.Log(trialType);
+        Debug.Log(trialType);
 
         LoadTarget();
         yield return StartCoroutine(LoadStimuli());
@@ -88,8 +92,12 @@ public class TrialRunner : MonoBehaviour
         targetObject.tag = "Target";
         targetObject.gameObject.name = "Target";
         targetObject.transform.position = targetLocation;
-        targetObject.GetComponent<Renderer>().sortingOrder = 10;
-        targetObject.GetComponent<Renderer>().enabled = false;
+
+        Renderer targetRd = targetObject.GetComponent<Renderer>();
+        targetRd.sortingOrder = 10;
+        targetRd.enabled = false;
+        targetColour = (Material)Session.instance.CurrentTrial.settings.GetObject("targetColour");
+        targetRd.material = targetColour;
     }
 
     // Create the remaining stimuli from the stimuli list
@@ -105,7 +113,6 @@ public class TrialRunner : MonoBehaviour
                 Renderer stimRend = stimuliObject.GetComponent<Renderer>();
                 stimRend.enabled = false;
                 
-                System.Random random = new();
                 Material randomColour = stimuliColours[random.Next(stimuliColours.Count)];
                 stimRend.material = randomColour;
 
@@ -169,8 +176,13 @@ public class TrialRunner : MonoBehaviour
             case "onset":
                 ShowStimuli(true, incTarget: false);
                 break;
-            default:
+
+            case "luminance":
+                targetObject.GetComponent<Renderer>().material = stimuliColours[2]; // Set colour to mid-point
                 ShowStimuli(true);
+                break;
+
+            default:
                 break;
         }
     }
@@ -214,10 +226,7 @@ public class TrialRunner : MonoBehaviour
                 break;
 
             case "luminance": // Needs adjusting
-                Color backgroundColor = background.GetComponent<MeshRenderer>().material.color;
-                Color originalColor = targetObject.GetComponent<Renderer>().material.color;
-                Color newColor = backgroundColor - originalColor;
-                targetObject.GetComponent<Renderer>().material.color = newColor;
+                targetObject.GetComponent<Renderer>().material = targetColour;
                 break;
 
             default:
@@ -295,7 +304,7 @@ public class TrialRunner : MonoBehaviour
         currentTrial.result["targetSide"] = targetSide;
         currentTrial.result["sideResponse"] = sideResponse;
 
-        trialPassed = sideResponse == targetSide ? true : false;
+        trialPassed = sideResponse == targetSide;
         currentTrial.result["trialPassed"] = trialPassed;
 
         RT = end - start;
