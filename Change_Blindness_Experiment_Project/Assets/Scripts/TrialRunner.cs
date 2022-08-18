@@ -18,12 +18,11 @@ public class TrialRunner : MonoBehaviour
     GameObject targetObject;
     double start, end, RT;
     string sideResponse;
-    bool trialPassed;
+    Transform targetLocation;
 
     // Cached references from Start()
     Transform stimuliHolder;
     List<GameObject> StimuliList;
-    GameObject background;
     PlayerInput controls;
 
     // States
@@ -36,7 +35,6 @@ public class TrialRunner : MonoBehaviour
     {
         stimuliHolder = GameObject.Find("SpawnedStimuli").transform;
         StimuliList = GetComponent<TrialGenerator>().MainStimuliList;
-        background = GameObject.Find("WindowBackground");
         controls = SessionController.instance.controls;
         stimuliColours = gameObject.GetComponent<TrialGenerator>().stimuliColours;
     }
@@ -86,12 +84,12 @@ public class TrialRunner : MonoBehaviour
     private void LoadTarget()
     {
         GameObject target = (GameObject)Session.instance.CurrentTrial.settings.GetObject("target");
-        Vector3 targetLocation = (Vector3)Session.instance.CurrentTrial.settings.GetObject("targetLocation");
+        targetLocation = (Transform)Session.instance.CurrentTrial.settings.GetObject("targetLocation");
 
         targetObject = Instantiate(target, stimuliHolder);
         targetObject.tag = "Target";
-        targetObject.gameObject.name = "Target";
-        targetObject.transform.position = targetLocation;
+        targetObject.name = "Target";
+        targetObject.transform.position = targetLocation.position;
 
         Renderer targetRd = targetObject.GetComponent<Renderer>();
         targetRd.sortingOrder = 10;
@@ -139,7 +137,7 @@ public class TrialRunner : MonoBehaviour
 
         foreach (Collider other in colliders)
         {
-            if (other.CompareTag("Target")) { continue; }
+            if (other.CompareTag("Target") || other.CompareTag("SpawnAreaBorder")) { continue; }
 
             Color targetColour = targetObject.GetComponent<Renderer>().material.color;
             Color stimuliOverlapColour = other.GetComponent<Renderer>().material.color;
@@ -202,7 +200,7 @@ public class TrialRunner : MonoBehaviour
     {
         foreach (Transform stimuli in stimuliHolder)
         {
-            if (!incTarget && stimuli.tag == "Target") { continue; }
+            if (!incTarget && stimuli.CompareTag("Target")) { continue; }
             else
             {
                 stimuli.GetComponent<Renderer>().enabled = toggle;
@@ -249,13 +247,13 @@ public class TrialRunner : MonoBehaviour
             double duration = Time.realtimeSinceStartupAsDouble - start;
             if (duration >= maxTimeToRespond)
             {
-                HandleResponse(timedOut: true);
+                HandleResponse();
             }
             yield return null;
         }
     }
 
-    // Handles a given response - saves trial data 
+    // Handles a given response - saves trial data - called by SessionController when relevant input detected
     public void HandleResponse(InputAction.CallbackContext value)
     {
         if (!Session.instance.InTrial || !value.started || !AwaitingResponse) { return; }
@@ -280,7 +278,8 @@ public class TrialRunner : MonoBehaviour
         SaveResults();
     }
 
-    public void HandleResponse(bool timedOut)
+    // Handles Response in event of time-out (i.e. no input given)
+    public void HandleResponse()
     {
         if (!Session.instance.InTrial || !AwaitingResponse) { return; }
 
@@ -298,14 +297,29 @@ public class TrialRunner : MonoBehaviour
         Trial currentTrial = Session.instance.CurrentTrial;
         
         string blockTag = Session.instance.CurrentBlock.settings.GetString("tag");
-        currentTrial.result["Condition"] = blockTag;
+        currentTrial.result["condition"] = blockTag;
 
-        string targetSide = Session.instance.CurrentTrial.settings.GetString("targetSide");
-        currentTrial.result["targetSide"] = targetSide;
-        currentTrial.result["sideResponse"] = sideResponse;
+        string targetType = currentTrial.settings.GetString("trial_type");
+        currentTrial.result["targetType"] = targetType;
 
-        trialPassed = sideResponse == targetSide;
-        currentTrial.result["trialPassed"] = trialPassed;
+        string targetLoc = targetLocation.name;
+        currentTrial.result["targetLoc"] = targetLoc;
+
+        Material targetColour = (Material)currentTrial.settings.GetObject("targetColour");
+        string targetColourName = targetColour.name;
+        int transType = targetColourName switch
+        {
+            "Grey_0" => -2,
+            "Grey_64" => -1,
+            "Grey_192" => 1,
+            "Grey_255" => 2,
+            _ => 0
+        };
+        currentTrial.result["transType"] = transType;
+
+        string targetSide = targetLocation.tag;
+        currentTrial.result["response"] = sideResponse;
+        currentTrial.result["trialPassed"] = sideResponse == targetSide;
 
         RT = end - start;
         currentTrial.result["RT"] = RT;

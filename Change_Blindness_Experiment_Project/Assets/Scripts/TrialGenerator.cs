@@ -8,35 +8,74 @@ public class TrialGenerator : MonoBehaviour
 {
     [Header("Experiment Stimuli")]
     [Tooltip("List all stimuli prefabs here")]
-    [SerializeField] public List<GameObject> MainStimuliList = new List<GameObject>();
+    public List<GameObject> MainStimuliList = new();
 
     [Tooltip("A list of the materials (colours) to be used by the stimuli - Lowest RGB at index 0")]
-    [SerializeField] public List<Material> stimuliColours = new();
+    public List<Material> stimuliColours = new();
 
     [Tooltip("A list of transforms representing the desired potential spawn points for the target")]
     [SerializeField] private List<Transform> TargetSpawnPoints;
     
+    readonly List<TrialInfo> trialParameters = new();
     readonly System.Random random = new();
 
     private void Awake()
     {
         Block loadedBlock = SessionController.instance.currentBlock;
+        
+        if (loadedBlock.settings.GetString("tag") == "Practice")
         {
-            CreateTrials(loadedBlock);
+            CreatePracticeTrials(loadedBlock);
         }
+        else
+        {
+            int reps = Session.instance.settings.GetInt("n_reps");
+            for (int i = 0; i < reps; i++) { CreateTrialParameters(); }
+        }
+        
+        AssignTrials(loadedBlock, trialParameters);
     }
 
-    // Adds the trial information for a given block
-    // Each pair of trial types shares a target and the targets spawn location
-    private void CreateTrials(Block condition)
+    // Creates a list of objects holding the parameters for each trial of the current block,
+    // a trial exists for each combination of params - transType & targLoc - with the chosen target sharing those params for both
+    // an onset and a luminance trial
+    private void CreateTrialParameters()
+    {
+        foreach (Material transientType in stimuliColours)
+        {
+            // Avoid using mid-grey for target to ensure luminance trials always show a change
+            if (transientType.name == "Grey_128") { continue; } 
+            foreach (Transform spawnPoint in TargetSpawnPoints) 
+            {
+                TrialInfo onsetTrialInfo = new()
+                {
+                    SelectedMaterial = transientType,
+                    SelectedSpawnPoint = spawnPoint
+                };
+
+                MainStimuliList.Shuffle();
+                onsetTrialInfo.Target = MainStimuliList[0];
+
+                TrialInfo luminanceTialInfo = (TrialInfo) onsetTrialInfo.Clone();
+
+                onsetTrialInfo.TrialType = "onset";
+                trialParameters.Add(onsetTrialInfo);
+
+                luminanceTialInfo.TrialType = "luminance";
+                trialParameters.Add(luminanceTialInfo);
+            }
+        }
+    }
+    
+    // Modified trial generation to create n trials with randomised attributes for practice block
+    private void CreatePracticeTrials(Block practiceBlock)
     {
         GameObject target = null;
         Transform selectedSpawnPoint = null;
         Material selectedMaterial = null;
-       
         bool selectNewTarget = true;
 
-        foreach (Trial trial in condition.trials)
+        foreach (Trial trial in practiceBlock.trials)
         {
             if (selectNewTarget)
             {
@@ -46,34 +85,65 @@ public class TrialGenerator : MonoBehaviour
                 TargetSpawnPoints.Shuffle();
                 selectedSpawnPoint = TargetSpawnPoints[0];
 
-                selectedMaterial = stimuliColours[random.Next(stimuliColours.Count)];
-
-                // Select colour while colour != 128
-                //do
-                //{
-                //    selectedMaterial = stimuliColours[random.Next(stimuliColours.Count)];
-                //}
-                //while (selectedMaterial)
+                // Give target a random colour that's not the midpoint grey
+                do
+                {
+                    selectedMaterial = stimuliColours[random.Next(stimuliColours.Count)];
+                }
+                while (selectedMaterial.name == "Grey_128");
             }
+
+            TrialInfo pracTrialInfo = new()
+            {
+                Target = target,
+                SelectedSpawnPoint = selectedSpawnPoint,
+                SelectedMaterial = selectedMaterial
+            };
 
             switch (selectNewTarget)
             {
                 case true:
-                    trial.settings.SetValue("trial_type", "onset");
+                    pracTrialInfo.TrialType = "onset";
                     selectNewTarget = false;
                     break;
                 case false:
-                    trial.settings.SetValue("trial_type", "luminance");
+                    pracTrialInfo.TrialType = "luminance";
                     selectNewTarget = true;
                     break;
             }
 
-            // Assign Target Values to each trial
-            trial.settings.SetValue("target", target);
-            trial.settings.SetValue("targetLocation", selectedSpawnPoint.position);
-            trial.settings.SetValue("targetSide", selectedSpawnPoint.tag);
-            trial.settings.SetValue("targetColour", selectedMaterial);
+            trialParameters.Add(pracTrialInfo);
         }
-        condition.trials.Shuffle();
+    }
+
+    // Assign generated trial parameters to each trial object
+    private void AssignTrials(Block block, List<TrialInfo> trialParamList)
+    {
+        for (int i = 0; i < trialParamList.Count; i++)
+        {
+            Trial trial = block.trials[i];
+            TrialInfo p = trialParamList[i];
+
+            trial.settings.SetValue("trial_type", p.TrialType);
+            trial.settings.SetValue("target", p.Target);
+            trial.settings.SetValue("targetLocation", p.SelectedSpawnPoint);
+            trial.settings.SetValue("targetSide", p.SelectedSpawnPoint.tag);
+            trial.settings.SetValue("targetColour", p.SelectedMaterial);
+        }
+
+        block.trials.Shuffle();
+    }
+}
+
+public class TrialInfo
+{
+    public GameObject Target { get; set; }
+    public Transform SelectedSpawnPoint { get; set; }
+    public Material SelectedMaterial { get; set; }
+    public string TrialType { get; set; }
+
+    public object Clone()
+    {
+        return this.MemberwiseClone();
     }
 }

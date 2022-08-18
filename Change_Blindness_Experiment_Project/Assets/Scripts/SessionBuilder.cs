@@ -11,18 +11,18 @@ public class SessionBuilder : MonoBehaviour
     string condition2;
     string condition3;
     string condition4;
-    int n_trials;
+    int nReps;
+    readonly int minTrialNum = 48; // 2 (targType) * 4 (transType) * 6 (targLoc) 
 
     public void GenerateExperiment(Session session)
     {
-        n_trials = Session.instance.settings.GetInt("n_trials");
         condition1 = (string)Session.instance.participantDetails["condition1"];
         condition2 = (string)Session.instance.participantDetails["condition2"];
         condition3 = (string)Session.instance.participantDetails["condition3"];
         condition4 = (string)Session.instance.participantDetails["condition4"];
 
-        // Trial count must be even as half will be onset and the other half luminance
-        if (n_trials % 2 != 0) { Debug.LogError("Trial count must be an even number."); }
+        nReps = Session.instance.settings.GetInt("n_reps");
+        int n_trials = minTrialNum * nReps;
 
         if (!CheckConditionsUnique()) { return; }
         CreateBlocks(n_trials);
@@ -33,7 +33,7 @@ public class SessionBuilder : MonoBehaviour
     private bool CheckConditionsUnique()
     {
         // Returns false if cannot be added to the hashset (as already added)
-        List<string> conditions = new List<string>() { condition1, condition2, condition3, condition4 };
+        List<string> conditions = new() { condition1, condition2, condition3, condition4 };
         var diffChecker = new HashSet<string>();
         bool allUnique = conditions.All(diffChecker.Add);
 
@@ -73,7 +73,7 @@ public class SessionBuilder : MonoBehaviour
     // Uses the blocks type to check against what type should be at the given position
     private void OrderBlocks()
     {
-        List<Block> blockList = new List<Block>(Session.instance.blocks);
+        List<Block> blockList = new(Session.instance.blocks);
         foreach (Block block in blockList)
         {
             string blockType = block.settings.GetString("tag");
@@ -98,6 +98,7 @@ public class SessionBuilder : MonoBehaviour
             {
                 // Practice is added to the block list last, and as such this should only run once all the other 
                 // blocks have been sorted - placing it first and moving the other along by 1
+                Session.instance.blocks.Remove(block);
                 Session.instance.blocks.Insert(0, block);
             }
         }
