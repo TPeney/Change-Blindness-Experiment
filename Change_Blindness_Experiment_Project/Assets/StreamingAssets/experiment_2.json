@@ -1,10 +1,10 @@
 {
     "run_practice": false,
     "n_prac_trials": 2,
-    "n_trials": 2,
+    "n_reps": 2,
     "time_between_trials": 2.0,
     "fixate_duration": 1.0,
-    "display_duration": 2.0,
-    "hide_duration": 0.5,
+    "display_duration": 1.2,
+    "hide_duration": 0.1,
     "response_duration": 4
 }
