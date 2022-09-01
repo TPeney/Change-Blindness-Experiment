@@ -323,6 +323,9 @@ public class TrialRunner : MonoBehaviour
 
         RT = end - start;
         currentTrial.result["RT"] = RT;
+
+        // DEBUG - DELETE ME
+        Debug.Log($"TrialPassed = {sideResponse == targetSide}, target was {targetSide}");
     }
 
     // Destroys all trial-specific objects and ends the trial
@@ -334,7 +337,6 @@ public class TrialRunner : MonoBehaviour
         }
         StopAllCoroutines();
         Session.instance.CurrentTrial.End();
-        // TODO Show end screen if last trial - wait for response before contuining
-        SessionController.instance.EndOfTrialCheck();
+        StartCoroutine(SessionController.instance.EndOfTrialCheck());
     }
 }

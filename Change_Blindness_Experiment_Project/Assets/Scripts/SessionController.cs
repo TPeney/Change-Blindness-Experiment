@@ -36,7 +36,8 @@ public class SessionController : MonoBehaviour
 
         if (nextBlockIndex > Session.instance.blocks.Count)
         {
-            // load end scene
+            SceneManager.LoadScene("End");
+            StartCoroutine(ShowInfoScreen("ExitScreen"));
             Application.Quit();
         }
         else
@@ -44,14 +45,6 @@ public class SessionController : MonoBehaviour
             currentBlock = Session.instance.GetBlock(nextBlockIndex);
             nextBlockIndex++;
             string ConditionTag = currentBlock.settings.GetString("tag");
-            //if (ConditionTag != "RL")
-            //{
-            //    XRGeneralSettings.Instance.Manager.StartSubsystems();
-            //}
-            //else
-            //{
-            //    XRGeneralSettings.Instance.Manager.StopSubsystems();
-            //}
 
             StartCoroutine(LoadScene(ConditionTag));
         }
@@ -75,12 +68,7 @@ public class SessionController : MonoBehaviour
         controls = FindObjectOfType<PlayerInput>();
 
         // If there is a StartScreen - show it
-        GameObject loadedInfoScreenObject = GameObject.Find("StartScreen");
-        if (loadedInfoScreenObject != null)
-        {
-            loadedInfoScreen = loadedInfoScreenObject.GetComponent<InfoScreen>();
-            yield return StartCoroutine(ShowInfoScreen());
-        }
+        yield return StartCoroutine(ShowInfoScreen("StartScreen"));
 
         StartTrial();
     }
@@ -93,11 +81,12 @@ public class SessionController : MonoBehaviour
 
     // Called by the scene's trialHandler once the trial is complete
     // Checks whether the next trial is the last in block - if so, toggles to load next scene after
-    public void EndOfTrialCheck()
+    public IEnumerator EndOfTrialCheck()
     {
         // If this trial is the last in the block, load the next condition
         if (Session.instance.CurrentTrial == Session.instance.CurrentBlock.lastTrial)
         {
+            yield return StartCoroutine(ShowInfoScreen("EndScreen"));
             LoadNextCondition();
         }
         else
@@ -108,9 +97,16 @@ public class SessionController : MonoBehaviour
 
     // Called when an info screen should be shown
     // Yields control back to session controller once a response has been given
-    private IEnumerator ShowInfoScreen()
+    private IEnumerator ShowInfoScreen(string ScreenName)
     {
-        yield return StartCoroutine(loadedInfoScreen.AwaitResponse());
+        // Attempt to find info screen
+        GameObject loadedInfoScreenObject = GameObject.Find(ScreenName);
+        if (loadedInfoScreenObject != null)
+        {
+            loadedInfoScreen = loadedInfoScreenObject.GetComponent<InfoScreen>();
+            yield return StartCoroutine(loadedInfoScreen.AwaitResponse());
+        }
+        else { Debug.Log($"Cannot find an InfoScreen with name: {ScreenName}"); }
     }
 
     // Passes an input to the scene's trialHandler

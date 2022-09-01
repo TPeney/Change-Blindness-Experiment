@@ -24,11 +24,8 @@ EditorBuildSettings:
     path: Assets/Scenes/VRG.unity
     guid: a012d6a11611aec4cba7df4bf1fbcb98
   - enabled: 1
-    path: Assets/UXF/Examples/3_MultiScene_FootballAndRT/OtherScenes/ShootingExample.unity
-    guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/UXF/Examples/3_MultiScene_FootballAndRT/OtherScenes/ReactionExample.unity
-    guid: 00000000000000000000000000000000
+    path: Assets/Scenes/End.unity
+    guid: bf3ab4697ff202e4e81a4fab07c625d1
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d29746dd8cd9dd14da1c08bb37a67805, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d3cab5bc5a5597040878cfb81373522b, type: 2}
