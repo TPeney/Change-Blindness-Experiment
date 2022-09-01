@@ -9,7 +9,7 @@ public class StimuliSpawn : MonoBehaviour
     string blockType;
 
     int attempts = 0;
-    int maxAttempts = 20;
+    int maxAttempts = 10000;
 
     public bool placed = false;
     public bool attemptingToPlace = false;
@@ -26,14 +26,6 @@ public class StimuliSpawn : MonoBehaviour
         if (other.name == "ghost")
         {
             other.tag = "hit";
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("SpawnAreaBorder")) 
-        {
-            StartCoroutine(AttemptToPlace());
         }
     }
 
@@ -75,6 +67,7 @@ public class StimuliSpawn : MonoBehaviour
         {
             this.transform.position = coordinates;
             placed = true;
+            Debug.Log(attempts);
         }
 
         Destroy(ghost);
