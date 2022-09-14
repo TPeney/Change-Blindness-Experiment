@@ -524,6 +524,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1245599513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1245599514}
+  - component: {fileID: 1245599516}
+  - component: {fileID: 1245599515}
+  m_Layer: 5
+  m_Name: Response
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1245599514
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245599513}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.311999, y: 0.311999, z: 0.311999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4008966071315323596}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 361, y: -387}
+  m_SizeDelta: {x: 104.8022, y: 138}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1245599515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245599513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 76e8efe7a62434f41b0135559433aff8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1245599516
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245599513}
+  m_CullTransparentMesh: 1
 --- !u!224 &1725151817 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7066884914599148213, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
@@ -726,17 +802,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3719702864839937707, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_Text
-      value: "The instructions for this experiment are as follows:\n\nYou will be
-        presented with a pattern of shapes for a short duration. \n\nThese will then
-        be hidden briefly, and then shown to you again. However, there will be a
-        slight difference between the new and old patterns.\n\nFor example, there
-        could be a new shape or an existing shape could have changed colour.\n\nYour
-        task is to respond which side of the display you think the change occured
-        on. There will always be one single change per pair.\n\nIf you think the
-        change was on the left, press {left_response}.\n\nIf you think the change
-        was on the left, press {right_response}.\n\nYou should try to respond as
-        quickly, but also as accurately as you can. If you are completely unsure,
-        please guess a side. "
+      value: "You will first be presented with a display comprising of different
+        shapes, which will briefly disappear. \n\nWhen it reappears a change will
+        have taken place: now the display will contain either a new object or one
+        of the existing objects will have changed in brightness.\n\nYour task is
+        to respond which side of the display you think the change occurred on (left
+        vs right). \nThere will always be one single change per pair.\n\nIf you think
+        the change was on the left, respond with the left controller.\n\nIf you think
+        the change was on the right, respond with the right controller.\n\nDetecting
+        the change will be quite difficult. You may never be 100% sure about which
+        shape has changed, but rather have more of a feeling that a change has occurred.
+        You will only have 4 seconds to decide, so there this is no need to respond
+        quickly and if you are completly unsure, take a guess.\n\nYou should only
+        make a response when you see this symbol:"
       objectReference: {fileID: 0}
     - target: {fileID: 3894968614831207842, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1048,3 +1126,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+--- !u!224 &4008966071315323596 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5310228875522383984, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+  m_PrefabInstance: {fileID: 4008966071315323595}
+  m_PrefabAsset: {fileID: 0}
