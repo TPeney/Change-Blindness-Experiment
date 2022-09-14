@@ -400,7 +400,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dc05e768f44ba5f42b82b4c6a305ef2f, type: 2}
+  - {fileID: 2100000, guid: 9a090a7dc8e44c84da6b72ba29bb2213, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -859,15 +859,6 @@ MonoBehaviour:
   - {fileID: 5678364640623848965, guid: 35a300a451b648b48ad3db6d12f2dd3a, type: 3}
   - {fileID: 519747996415444044, guid: 12dfa7dcdc3c2c145b32a5a3bbeab2af, type: 3}
   - {fileID: 6164722455663975958, guid: 815624df50535dc43b5f8ebe5ed25789, type: 3}
-  - {fileID: 6039284619272484923, guid: 408963a094e3951409aff93ab2bada0c, type: 3}
-  - {fileID: 526775261171372446, guid: a7558e06cb293134295fd4180f760e1d, type: 3}
-  - {fileID: 3998836120538714604, guid: b11ee8eac7b85ab41bb8b35506858132, type: 3}
-  - {fileID: 3458911471915078774, guid: a73181796be5a83498a19f2f0dc07888, type: 3}
-  - {fileID: 6675578254926650182, guid: 0e6e1d6bdab83f743b8e5e57778f31f9, type: 3}
-  - {fileID: 2122691556391908716, guid: cabd248df00eee349a77c7fd33b868df, type: 3}
-  - {fileID: 6392012033315730251, guid: 3ced6bc6ca28c514eb3236ca5a616c1d, type: 3}
-  - {fileID: 464169986004675193, guid: 03d2d2c498cc8d0449472d2cba7ca37e, type: 3}
-  - {fileID: 7284739378897124374, guid: 1118d9076f911d7429936281b76a112c, type: 3}
   stimuliColours:
   - {fileID: 2100000, guid: f17076071b5c0c648993da94fd3e4fd7, type: 2}
   - {fileID: 2100000, guid: ae6530a3be24da1439c66d5ddc280ade, type: 2}

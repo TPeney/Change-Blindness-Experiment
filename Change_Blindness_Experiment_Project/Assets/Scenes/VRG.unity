@@ -874,7 +874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8413588687227049406, guid: 91a7fb246f269184299710c8228e5d3a, type: 3}
       propertyPath: MainStimuliList.Array.size
-      value: 21
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8413588687227049406, guid: 91a7fb246f269184299710c8228e5d3a, type: 3}
       propertyPath: stimuliColours.Array.data[0]
@@ -1500,7 +1500,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372396255}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.01, y: -0.806, z: -3.923}
+  m_LocalPosition: {x: -1.567, y: 0.49, z: -5.101}
   m_LocalScale: {x: 4.820117, y: 4.820117, z: 4.820117}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3183,7 +3183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4062862956700842452, guid: 3641a0e619a45e44980bf959da232f7c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.278
+      value: -5.548
       objectReference: {fileID: 0}
     - target: {fileID: 4062862956700842452, guid: 3641a0e619a45e44980bf959da232f7c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3589,7 +3589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2503322527534964287, guid: 289b7620429c48c41913717b9f7efa75, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.37860253
+      value: 0.64070904
       objectReference: {fileID: 0}
     - target: {fileID: 2503322527534964287, guid: 289b7620429c48c41913717b9f7efa75, type: 3}
       propertyPath: m_LocalScale.z
@@ -3601,7 +3601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2503322527534964287, guid: 289b7620429c48c41913717b9f7efa75, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1865
+      value: -0.3176
       objectReference: {fileID: 0}
     - target: {fileID: 2503322527534964287, guid: 289b7620429c48c41913717b9f7efa75, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3842,7 +3842,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 91a1b05a08a334950a599b252610e8cf, type: 2}
+  - {fileID: 2100000, guid: 1e59aafdf3b78e44f952e64fb8f514b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4255,7 +4255,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2476291137497756693}
   m_LocalRotation: {x: 0.0000004172325, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5886}
+  m_LocalPosition: {x: 0, y: 0, z: 1.831}
   m_LocalScale: {x: 0.045537047, y: 0.045537047, z: 0.045537047}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4264,7 +4264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.4456642, y: 0.3553}
+  m_AnchoredPosition: {x: 0.357, y: 0.095}
   m_SizeDelta: {x: 28.6781, y: 12.4166}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2476291137497756693
@@ -4284,7 +4284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3104601364382677660
 Transform:
   m_ObjectHideFlags: 0
