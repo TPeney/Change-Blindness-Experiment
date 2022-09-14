@@ -26,6 +26,8 @@ public class StimuliSpawn : MonoBehaviour
         if (other.name == "ghost")
         {
             other.tag = "hit";
+            Debug.Log("hit the other obj");
+
         }
     }
 

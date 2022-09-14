@@ -13,6 +13,7 @@ public class SessionController : MonoBehaviour
     public PlayerInput controls;
     private TrialRunner loadedTrialRunner;
     public InfoScreen loadedInfoScreen;
+    private ButtonVR buttonVR;
 
     private int numberOfConditions;
     private int nextBlockIndex = 1;
@@ -67,15 +68,27 @@ public class SessionController : MonoBehaviour
         loadedTrialRunner = FindObjectOfType<TrialRunner>();
         controls = FindObjectOfType<PlayerInput>();
 
+        // Find button script if on VRG scene
+        if (SceneManager.GetActiveScene().name == "VRG")
+        {
+            buttonVR = FindObjectOfType<ButtonVR>();
+        }
+
         // If there is a StartScreen - show it
         yield return StartCoroutine(ShowInfoScreen("StartScreen"));
 
-        StartTrial();
+        StartCoroutine(StartTrial());
     }
 
     // Calls the scene's trialHandler to start a trial
-    public void StartTrial()
+    public IEnumerator StartTrial()
     {
+        if (SceneManager.GetActiveScene().name == "VRG")
+        {
+            buttonVR.ResetButton();
+            yield return new WaitUntil(() => buttonVR.isPressed == true);
+        }
+
         loadedTrialRunner.BeginTrial();
     }
 
@@ -91,7 +104,7 @@ public class SessionController : MonoBehaviour
         }
         else
         {
-            loadedTrialRunner.BeginTrial();
+            StartCoroutine(StartTrial());
         }
     }
 
