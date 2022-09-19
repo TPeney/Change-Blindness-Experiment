@@ -132,6 +132,22 @@ public class TrialGenerator : MonoBehaviour
         }
 
         block.trials.Shuffle();
+
+        // Assign random ISI
+        List<float> hide_durations = Session.instance.settings.GetFloatList("hide_durations");
+
+        int duration_list_index = -1;
+        int nTrials = block.trials.Count;
+        Debug.Log(nTrials);
+        for (int i = 0; i < nTrials; i++)
+        {
+            if (i % (nTrials / 4) == 0) 
+            {
+                duration_list_index++;
+            }
+            block.trials[i].settings.SetValue("hide_duration", hide_durations[duration_list_index]);
+        }
+        block.trials.Shuffle();
     }
 }
 

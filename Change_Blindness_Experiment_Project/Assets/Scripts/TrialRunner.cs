@@ -53,7 +53,7 @@ public class TrialRunner : MonoBehaviour
     {
         float interTrialTime = Session.instance.settings.GetFloat("time_between_trials");
         float stimuliDisplayDuration = Session.instance.settings.GetFloat("display_duration");
-        float hideDuration = Session.instance.settings.GetFloat("hide_duration");
+        float hideDuration = Session.instance.CurrentTrial.settings.GetFloat("hide_duration");
         string trialType = Session.instance.CurrentTrial.settings.GetString("trial_type");
 
         //Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
@@ -304,6 +304,9 @@ public class TrialRunner : MonoBehaviour
 
         string targetLoc = targetLocation.name;
         currentTrial.result["targetLoc"] = targetLoc;
+
+        float hideDuration = currentTrial.settings.GetFloat("hide_duration");
+        currentTrial.result["ISI"] = hideDuration;
 
         Material targetColour = (Material)currentTrial.settings.GetObject("targetColour");
         string targetColourName = targetColour.name;
