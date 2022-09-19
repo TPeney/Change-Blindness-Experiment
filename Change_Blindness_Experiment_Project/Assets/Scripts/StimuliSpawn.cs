@@ -14,10 +14,13 @@ public class StimuliSpawn : MonoBehaviour
     public bool placed = false;
     public bool attemptingToPlace = false;
 
+    private Transform stimuliHolder;
+
     private void Awake()
     {
         stimuliSpawnArea = GameObject.Find("StimuliSpawnArea").transform;
         blockType = Session.instance.CurrentBlock.settings.GetString("tag");
+        stimuliHolder = GameObject.Find("SpawnedStimuli").transform;
     }
 
     // If an area check ghost is spawned atop an existing placed stimuli, set ghost to acknowledge a hit
@@ -26,8 +29,6 @@ public class StimuliSpawn : MonoBehaviour
         if (other.name == "ghost")
         {
             other.tag = "hit";
-            Debug.Log("hit the other obj");
-
         }
     }
 
@@ -69,7 +70,6 @@ public class StimuliSpawn : MonoBehaviour
         {
             this.transform.position = coordinates;
             placed = true;
-            Debug.Log(attempts);
         }
 
         Destroy(ghost);
@@ -92,6 +92,8 @@ public class StimuliSpawn : MonoBehaviour
         
         // Add a colider which is the same dimensions as the current stimuli's collider 
         ghost.transform.localScale = this.transform.lossyScale;
+        ghost.transform.rotation = this.transform.rotation;
+
         BoxCollider bx = ghost.AddComponent<BoxCollider>();
         bx.isTrigger = true;
         bx.size = this.GetComponent<BoxCollider>().size;
