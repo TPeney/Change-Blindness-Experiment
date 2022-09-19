@@ -59,12 +59,13 @@ public class TrialRunner : MonoBehaviour
         //Debug.Log(Session.instance.CurrentBlock.settings.GetString("tag"));
         //Debug.Log(Session.instance.currentTrialNum);
         Debug.Log(trialType);
-
+        yield return new WaitForSecondsRealtime(interTrialTime);
+        
+        ShowFixation(true);
         LoadTarget();
         yield return StartCoroutine(LoadStimuli());
-        yield return new WaitForSecondsRealtime(interTrialTime);
 
-        yield return StartCoroutine(ShowFixation());
+        ShowFixation(false);
         LoadStimuliForTrialType(trialType);
         yield return new WaitForSecondsRealtime(stimuliDisplayDuration);
         
@@ -124,6 +125,12 @@ public class TrialRunner : MonoBehaviour
                     }
                 }
             }
+        }
+
+        Transform allStimuli = GameObject.Find("SpawnedStimuli").transform;
+        foreach (Transform stimuli in allStimuli)
+        {
+            stimuli.gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
         CheckForColourOverlap(); // See below
     }
@@ -186,13 +193,13 @@ public class TrialRunner : MonoBehaviour
     }
 
     // Toggles the Fixation Point on for a duration (Set in settings)
-    private IEnumerator ShowFixation()
+    private void ShowFixation(bool toggle)
     {
-        float fixateDuration = Session.instance.settings.GetFloat("fixate_duration");
+        //float fixateDuration = Session.instance.settings.GetFloat("fixate_duration");
 
-        fixationCross.SetActive(true);
-        yield return new WaitForSecondsRealtime(fixateDuration);
-        fixationCross.SetActive(false);
+        fixationCross.SetActive(toggle);
+        //yield return new WaitForSecondsRealtime(fixateDuration);
+        //fixationCross.SetActive(false);
     }
 
     // Toggles the rendering of the stimuli (and target if included)
