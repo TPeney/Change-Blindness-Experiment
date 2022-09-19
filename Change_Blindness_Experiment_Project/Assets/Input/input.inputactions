@@ -58,6 +58,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b1184dfe-49f2-4655-91e3-128e6452c8e5",
+                    "path": "<XRInputV1::Oculus::OculusTouchControllerOpenXR>{LeftHand}/primarybutton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RespondLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "371fe56d-763e-4e16-b47f-ee3a6de1529b",
                     "path": "<Keyboard>/m",
                     "interactions": "",
@@ -74,6 +85,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
+                    "action": "RespondRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70e76d0d-7132-4ce5-9eea-c9b595151ff8",
+                    "path": "<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/primarybutton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "RespondRight",
                     "isComposite": false,
                     "isPartOfComposite": false
