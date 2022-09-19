@@ -14,8 +14,10 @@ public class SessionBuilder : MonoBehaviour
     int nReps;
     readonly int minTrialNum = 48; // 2 (targType) * 4 (transType) * 6 (targLoc) 
 
+    // This function is called by the UXF_Rig at experiment Start 
     public void GenerateExperiment(Session session)
     {
+        // Set condition order from the startup UI
         condition1 = (string)Session.instance.participantDetails["condition1"];
         condition2 = (string)Session.instance.participantDetails["condition2"];
         condition3 = (string)Session.instance.participantDetails["condition3"];

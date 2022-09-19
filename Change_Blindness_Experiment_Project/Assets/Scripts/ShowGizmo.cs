@@ -17,7 +17,6 @@ public class ShowGizmo : MonoBehaviour
         if (other.name == "ghost")
         {
             other.tag = "hit";
-            Debug.Log("hit the border");
         }
     }
 }

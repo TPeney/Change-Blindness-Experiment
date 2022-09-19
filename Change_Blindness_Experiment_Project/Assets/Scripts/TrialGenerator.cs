@@ -138,7 +138,6 @@ public class TrialGenerator : MonoBehaviour
 
         int duration_list_index = -1;
         int nTrials = block.trials.Count;
-        Debug.Log(nTrials);
         for (int i = 0; i < nTrials; i++)
         {
             if (i % (nTrials / 4) == 0) 
