@@ -77,6 +77,11 @@ public class SessionController : MonoBehaviour
         // If there is a StartScreen - show it
         yield return StartCoroutine(ShowInfoScreen("StartScreen"));
 
+        if (SceneManager.GetActiveScene().name == "VRG")
+        {
+            buttonVR.ResetButton();
+        }
+
         StartCoroutine(StartTrial());
     }
 
@@ -85,7 +90,7 @@ public class SessionController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "VRG")
         {
-            buttonVR.ResetButton();
+            //buttonVR.ResetButton();
             yield return new WaitUntil(() => buttonVR.isPressed == true);
         }
 
