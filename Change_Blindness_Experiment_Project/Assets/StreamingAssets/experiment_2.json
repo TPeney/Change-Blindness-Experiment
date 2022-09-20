@@ -1,7 +1,7 @@
 {
     "run_practice": false,
-    "n_prac_trials": 2,
-    "n_reps": 2,
+    "n_prac_trials": 6,
+    "n_reps": 3,
     "time_between_trials": 2.0,
     "fixate_duration": 1.0,
     "display_duration": 1.2,
