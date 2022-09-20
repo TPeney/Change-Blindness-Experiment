@@ -992,7 +992,8 @@ PrefabInstance:
     - target: {fileID: 7228892367806298720, guid: 58cba05e6ef080b4cb1704f680708a4b, type: 3}
       propertyPath: m_text
       value: "The block is now over. Please remove your headset and complete the
-        survey before continuing. \n\nWhen ready, press trigger to load next block."
+        survey before continuing. \n\nWhen you have done the above, press trigger
+        to load the next block."
       objectReference: {fileID: 0}
     - target: {fileID: 7228892367806298720, guid: 58cba05e6ef080b4cb1704f680708a4b, type: 3}
       propertyPath: m_Enabled
@@ -1106,12 +1107,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7228892367806298720, guid: 58cba05e6ef080b4cb1704f680708a4b, type: 3}
       propertyPath: m_text
-      value: 'If this is your first block, please continue when ready.
+      value: 'Continue through the block until you reach the next text screen.
 
 
-        Otherwise,
-        please make sure you have removed your headset and completed the survey before
-        continuing further.'
+        Press
+        the trigger button to begin.'
       objectReference: {fileID: 0}
     - target: {fileID: 7228892367806298720, guid: 58cba05e6ef080b4cb1704f680708a4b, type: 3}
       propertyPath: m_Enabled
