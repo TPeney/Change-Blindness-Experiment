@@ -30,27 +30,39 @@ public class TrialGenerator : MonoBehaviour
         else
         {
             int reps = Session.instance.settings.GetInt("n_reps");
-            for (int i = 0; i < reps; i++) { CreateTrialParameters(); }
+            for (int i = 0; i < reps; i++) { CreateTrialParameters(loadedBlock); }
         }
         
         AssignTrials(loadedBlock, trialParameters);
+
+        // DEBUG
+        for (int i = 0; i < loadedBlock.trials.Count; i++)
+        {
+            Debug.Log(loadedBlock.trials[i].settings.GetFloat("hide_duration"));
+        }
     }
 
     // Creates a list of objects holding the parameters for each trial of the current block,
     // a trial exists for each combination of params - transType & targLoc - with the chosen target sharing those params for both
     // an onset and a luminance trial
-    private void CreateTrialParameters()
+    private void CreateTrialParameters(Block loadedBlock)
     {
+        List<float> ISI_times = BuildISItimes(loadedBlock);
+        Debug.Log(ISI_times);
         foreach (Material transientType in stimuliColours)
         {
             // Avoid using mid-grey for target to ensure luminance trials always show a change
             if (transientType.name == "Grey_128") { continue; } 
             foreach (Transform spawnPoint in TargetSpawnPoints) 
             {
+                float ISI = ISI_times[0];
+                ISI_times.RemoveAt(0);
+
                 TrialInfo onsetTrialInfo = new()
                 {
                     SelectedMaterial = transientType,
-                    SelectedSpawnPoint = spawnPoint
+                    SelectedSpawnPoint = spawnPoint,
+                    ISI = ISI
                 };
 
                 MainStimuliList.Shuffle();
@@ -97,7 +109,8 @@ public class TrialGenerator : MonoBehaviour
             {
                 Target = target,
                 SelectedSpawnPoint = selectedSpawnPoint,
-                SelectedMaterial = selectedMaterial
+                SelectedMaterial = selectedMaterial,
+                ISI = 0.1f
             };
 
             switch (selectNewTarget)
@@ -129,24 +142,44 @@ public class TrialGenerator : MonoBehaviour
             trial.settings.SetValue("targetLocation", p.SelectedSpawnPoint);
             trial.settings.SetValue("targetSide", p.SelectedSpawnPoint.tag);
             trial.settings.SetValue("targetColour", p.SelectedMaterial);
+            trial.settings.SetValue("hide_duration", p.ISI);
         }
 
         block.trials.Shuffle();
 
-        // Assign random ISI
-        List<float> hide_durations = Session.instance.settings.GetFloatList("hide_durations");
+        // Assign random ISI - DEPRECATED
 
-        int duration_list_index = -1;
+        //int duration_list_index = -1;
+        //int nTrials = block.trials.Count;
+        //for (int i = 0; i < nTrials; i++)
+        //{
+        //    if (i % (nTrials / 4) == 0) 
+        //    {
+        //        duration_list_index++;
+        //    }
+        //    block.trials[i].settings.SetValue("hide_duration", hide_durations[duration_list_index]);
+        //}
+        //block.trials.Shuffle();
+
+    }
+
+    private List<float> BuildISItimes(Block block)
+    {
         int nTrials = block.trials.Count;
-        for (int i = 0; i < nTrials; i++)
+        int nReps = Session.instance.settings.GetInt("n_reps");
+        int multiplier = ((nTrials / nReps) / 2) / 4;
+        List<float> hide_duration_values = Session.instance.settings.GetFloatList("hide_durations");
+        List<float> hide_durations = new List<float>();
+
+        foreach (float value in hide_duration_values)
         {
-            if (i % (nTrials / 4) == 0) 
+            for (int i = 0; i < multiplier; i++)
             {
-                duration_list_index++;
+                hide_durations.Add(value);
             }
-            block.trials[i].settings.SetValue("hide_duration", hide_durations[duration_list_index]);
         }
-        block.trials.Shuffle();
+        hide_durations.Shuffle();
+        return hide_durations;
     }
 }
 
@@ -156,6 +189,7 @@ public class TrialInfo
     public Transform SelectedSpawnPoint { get; set; }
     public Material SelectedMaterial { get; set; }
     public string TrialType { get; set; }
+    public float ISI { get; set; }
 
     public object Clone()
     {
