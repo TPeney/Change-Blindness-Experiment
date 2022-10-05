@@ -1,5 +1,5 @@
 {
-    "run_practice": false,
+    "run_practice": true,
     "n_prac_trials": 6,
     "n_reps": 2,
     "time_between_trials": 1.0,
