@@ -39,6 +39,9 @@ public class SessionController : MonoBehaviour
         {
             SceneManager.LoadScene("End");
             StartCoroutine(ShowInfoScreen("ExitScreen"));
+
+            LogEndStats();
+
             Application.Quit();
         }
         else
@@ -132,5 +135,27 @@ public class SessionController : MonoBehaviour
     {
         loadedTrialRunner.HandleResponse(value);
         if (loadedInfoScreen != null) { loadedInfoScreen.HandleResponse(value); }
+    }
+
+    // Calculates avg RT and % correct and logs at end of experiment
+    private void LogEndStats()
+    {
+        int trialsPassed = 0;
+        double avgRT = 0;
+        int trialN = 0;
+
+        foreach (Block block in Session.instance.blocks)
+        {
+            foreach (Trial trial in block.trials)
+            {
+                if (trial.settings.GetBool("trialPassed") == true) { trialsPassed++; }
+                avgRT += trial.settings.GetDouble("RT");
+                trialN++;
+            }
+        }
+        avgRT /= trialN;
+
+        Debug.Log($"Session complete - Trials Passed: {trialsPassed} / {trialN}" +
+            $" and AvgRT: {avgRT}");
     }
 }
