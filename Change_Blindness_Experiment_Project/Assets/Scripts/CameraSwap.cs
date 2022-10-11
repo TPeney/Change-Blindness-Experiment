@@ -15,7 +15,7 @@ public class CameraSwap : MonoBehaviour
     private IEnumerator ChangeCamera()
     {
         yield return new WaitForSecondsRealtime(waitTime);
-        gameObject.active = false;
+        gameObject.SetActive(false);
     }
 
    

@@ -9,7 +9,7 @@ public class StimuliSpawn : MonoBehaviour
     string blockType;
 
     int attempts = 0;
-    int maxAttempts = 10000;
+    int maxAttempts = 100;
 
     public bool placed = false;
     public bool attemptingToPlace = false;
@@ -70,6 +70,12 @@ public class StimuliSpawn : MonoBehaviour
         {
             this.transform.position = coordinates;
             placed = true;
+            if (attempts >= maxAttempts)
+            {
+                Debug.Log($"Placement aborted - Block: {Session.instance.currentBlockNum}, " +
+                    $"Trial: {Session.instance.currentTrialNum}, " +
+                    $"Object: {gameObject.name}");
+            }
         }
 
         Destroy(ghost);
