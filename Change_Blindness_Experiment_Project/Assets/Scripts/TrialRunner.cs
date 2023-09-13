@@ -74,13 +74,24 @@ public class TrialRunner : MonoBehaviour
         yield return new WaitForSecondsRealtime(hideDuration);
         HideScene(false);
 
-        yield return new WaitForSecondsRealtime(stimuliDisplayDuration);
-
+        Coroutine preResponseActions = StartCoroutine(PreResponseActions(stimuliDisplayDuration));
+            
         yield return StartCoroutine(AwaitResponse());
+        StopCoroutine(preResponseActions);
 
         Cleanup();
     }
 
+    private IEnumerator PreResponseActions(float stimuliDisplayDuration)
+    {
+        AwaitingResponse = true;
+        start = Time.realtimeSinceStartupAsDouble;
+
+        yield return new WaitForSecondsRealtime(stimuliDisplayDuration);
+        ShowStimuli(false);
+        responsePrompt.SetActive(true);
+    }
+    
     // Load target into scene and assign it target-related properties
     private void LoadTarget()
     {
@@ -242,13 +253,9 @@ public class TrialRunner : MonoBehaviour
     // Allows a response to be provided for a given duration
     private IEnumerator AwaitResponse()
     {
-        float maxTimeToRespond = Session.instance.settings.GetFloat("response_duration");
-
-        ShowStimuli(false);
-        responsePrompt.SetActive(true);
-        AwaitingResponse = true;
-        start = Time.realtimeSinceStartupAsDouble;
-
+        float maxTimeToRespond = Session.instance.settings.GetFloat("display_duration") +
+            Session.instance.settings.GetFloat("response_duration");
+        
         while (AwaitingResponse)
         {
             double duration = Time.realtimeSinceStartupAsDouble - start;

@@ -17,7 +17,9 @@ public class InfoScreen : MonoBehaviour
 
     public IEnumerator AwaitResponse()
     {
+        responseReceived = false;
         this.GetComponent<TextMeshPro>().enabled = true;
+        yield return new WaitForEndOfFrame();
         while (!responseReceived)
         {
             yield return null;
@@ -26,12 +28,11 @@ public class InfoScreen : MonoBehaviour
 
     public void HandleResponse(InputAction.CallbackContext value)
     {
-        if (value.action == controls.actions.FindAction("Continue") && !value.started)
+        if (value.action == controls.actions.FindAction("Continue") && value.started)
         {
             responseReceived = true;
             this.GetComponent<TextMeshPro>().enabled = false;
             SessionController.instance.loadedInfoScreen = null;
         }
     }
-
 }

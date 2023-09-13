@@ -167,10 +167,10 @@ RectTransform:
   m_Father: {fileID: 1725151817}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 128, y: -586}
+  m_SizeDelta: {x: 236, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &116352470
 MonoBehaviour:
@@ -931,6 +931,46 @@ PrefabInstance:
     - target: {fileID: 4996543825448739084, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[0].dropDownOptions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[1].dropDownOptions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[2].dropDownOptions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[0].dropDownOptions.Array.data[1]
+      value: VRH
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[0].dropDownOptions.Array.data[2]
+      value: VRG
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[1].dropDownOptions.Array.data[1]
+      value: VRH
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[1].dropDownOptions.Array.data[2]
+      value: VRG
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[2].dropDownOptions.Array.data[1]
+      value: VRH
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501000076259103880, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: participantDataPoints.Array.data[2].dropDownOptions.Array.data[2]
+      value: VRG
       objectReference: {fileID: 0}
     - target: {fileID: 5885607712660318189, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_AnchorMax.y

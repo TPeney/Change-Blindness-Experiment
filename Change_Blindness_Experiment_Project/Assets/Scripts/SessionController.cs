@@ -71,19 +71,8 @@ public class SessionController : MonoBehaviour
         loadedTrialRunner = FindObjectOfType<TrialRunner>();
         controls = FindObjectOfType<PlayerInput>();
 
-        // Find button script if on VRG scene
-        if (SceneManager.GetActiveScene().name == "VRG")
-        {
-            buttonVR = FindObjectOfType<ButtonVR>();
-        }
-
         // If there is a StartScreen - show it
         yield return StartCoroutine(ShowInfoScreen("StartScreen"));
-
-        if (SceneManager.GetActiveScene().name == "VRG")
-        {
-            buttonVR.ResetButton();
-        }
 
         StartCoroutine(StartTrial());
     }
@@ -91,13 +80,8 @@ public class SessionController : MonoBehaviour
     // Calls the scene's trialHandler to start a trial
     public IEnumerator StartTrial()
     {
-        if (SceneManager.GetActiveScene().name == "VRG")
-        {
-            //buttonVR.ResetButton();
-            yield return new WaitUntil(() => buttonVR.isPressed == true);
-        }
-
         loadedTrialRunner.BeginTrial();
+        yield break;
     }
 
     // Called by the scene's trialHandler once the trial is complete
