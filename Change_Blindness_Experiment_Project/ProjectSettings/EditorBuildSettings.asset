@@ -21,13 +21,13 @@ EditorBuildSettings:
     path: Assets/Scenes/VRH.unity
     guid: 24011fc7346030a4194944a005a2951d
   - enabled: 1
-    path: Assets/Scenes/VRG_old.unity
+    path: Assets/Scenes/VRG.unity
     guid: a012d6a11611aec4cba7df4bf1fbcb98
   - enabled: 1
     path: Assets/Scenes/End.unity
     guid: bf3ab4697ff202e4e81a4fab07c625d1
   - enabled: 1
-    path: Assets/Scenes/VRG.unity
+    path: Assets/Scenes/VRG_new.unity
     guid: a4203ea1fd0d02c46868ed7ab80be93b
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d29746dd8cd9dd14da1c08bb37a67805, type: 2}
