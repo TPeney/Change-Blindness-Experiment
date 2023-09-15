@@ -148,8 +148,8 @@ public class SessionController : MonoBehaviour
         {
             foreach (Trial trial in block.trials)
             {
-                if (trial.settings.GetBool("trialPassed") == true) { trialsPassed++; }
-                avgRT += trial.settings.GetDouble("RT");
+                if ((bool)trial.result["trialPassed"]) { trialsPassed++; }
+                avgRT += (double)trial.result["RT"];
                 trialN++;
             }
         }
