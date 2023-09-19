@@ -2309,7 +2309,7 @@ Transform:
   - {fileID: 1904355024}
   - {fileID: 372396256}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1108184741
 PrefabInstance:
@@ -2712,6 +2712,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9192234825887729107, guid: 6b38227be57b8d246a5990ec4191f95e, type: 3}
   m_PrefabInstance: {fileID: 1407545118}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1426686967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1426686968}
+  m_Layer: 0
+  m_Name: StartTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1426686968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426686967}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9, y: -2.394, z: -2.556}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1442911380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3051,6 +3082,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5448817055137623751, guid: 3641a0e619a45e44980bf959da232f7c, type: 3}
+      propertyPath: resetTransform
+      value: 
+      objectReference: {fileID: 1426686968}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3641a0e619a45e44980bf959da232f7c, type: 3}
 --- !u!1 &1753050439
@@ -3734,7 +3769,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947083727}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c8ea73a5255e21f4d8e8e6fff796fe45, type: 3}
@@ -4167,7 +4202,7 @@ PrefabInstance:
       objectReference: {fileID: 1169686395}
     - target: {fileID: 3731768797200919012, guid: 23dfe6101ad606e4583a5f0825cffcc8, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3731768797200919012, guid: 23dfe6101ad606e4583a5f0825cffcc8, type: 3}
       propertyPath: m_LocalPosition.x

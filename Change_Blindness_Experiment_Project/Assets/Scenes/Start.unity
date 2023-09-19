@@ -167,10 +167,10 @@ RectTransform:
   m_Father: {fileID: 1725151817}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 128, y: -586}
-  m_SizeDelta: {x: 236, y: 32}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &116352470
 MonoBehaviour:
@@ -1155,6 +1155,46 @@ PrefabInstance:
     - target: {fileID: 8433572650688031904, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
+      value: 7046786e-3485-4394-85ce-baf2d8308df6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
+      value: Player/ResetPosition[/Keyboard/r]
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 18569845}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetViewPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SessionController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104440194578460015, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9114769296701443918, guid: d3a4ff7af299c764fac412ccd1c88021, type: 3}
       propertyPath: m_SizeDelta.y

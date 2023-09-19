@@ -142,4 +142,12 @@ public class SessionController : MonoBehaviour
         Debug.Log($"Session complete - Trials Passed: {trialsPassed} / {trialN}" +
             $" and AvgRT: {avgRT}");
     }
+
+    public void ResetViewPressed(InputAction.CallbackContext context)
+    {
+        PositionReset positionResetScript = FindObjectOfType<PositionReset>();
+
+        if (!context.performed) { return; }
+        positionResetScript.ResetView();
+    }
 }
