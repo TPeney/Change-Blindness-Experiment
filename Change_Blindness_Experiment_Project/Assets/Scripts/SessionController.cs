@@ -27,7 +27,6 @@ public class SessionController : MonoBehaviour
             instance = this;
         }
         else { Destroy(gameObject); }
-        XRGeneralSettings.Instance.Manager.StopSubsystems();
     }
 
     // Get the next block by index and load related scene using its tag

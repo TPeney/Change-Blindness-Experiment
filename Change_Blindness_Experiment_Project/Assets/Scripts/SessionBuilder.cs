@@ -21,6 +21,7 @@ public class SessionBuilder : MonoBehaviour
         condition1 = (string)Session.instance.participantDetails["condition1"];
         condition2 = (string)Session.instance.participantDetails["condition2"];
         condition3 = (string)Session.instance.participantDetails["condition3"];
+        condition4 = (string)Session.instance.participantDetails["condition4"];
 
         nReps = Session.instance.settings.GetInt("n_reps");
         int n_trials = minTrialNum * nReps;
@@ -51,11 +52,13 @@ public class SessionBuilder : MonoBehaviour
     private void CreateBlocks(int n_trials)
     {
         Block block_RL = Session.instance.CreateBlock(n_trials);
+        Block block_VRL = Session.instance.CreateBlock(n_trials);
         Block block_VRH = Session.instance.CreateBlock(n_trials);
         Block block_VRG = Session.instance.CreateBlock(n_trials);
 
         // Tag should be equal to corresponding Scene name
         block_RL.settings.SetValue("tag", "RL");
+        block_VRL.settings.SetValue("tag", "VRL");
         block_VRH.settings.SetValue("tag", "VRH");
         block_VRG.settings.SetValue("tag", "VRG");
 

@@ -137,7 +137,7 @@
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "XR;Keyboard&Mouse",
                     "action": "ResetPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
